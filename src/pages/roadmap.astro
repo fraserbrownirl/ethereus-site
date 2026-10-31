@@ -5,7 +5,7 @@ import FigureC from "../components/FigureC.astro";
 const REPO = "https://github.com/fraserbrownirl/ethereus";
 ---
 
-<Base title="Roadmap" description="The firmware is finished once; the backbone is swappable — Qwen3.5-4B today, Kimi K3 tomorrow.">
+<Base title="Roadmap" description="Ethereus is an EVM agent whose spending rules, hashes and arithmetic run inside the model's own layers, where a prompt can't switch them off. Open weights, exact, replayable.">
   <style>
     .hero { padding: 36px 0 18px; }
     .hero h1 { margin: 0; font-size: clamp(2rem, 5vw, 3rem); letter-spacing: -0.05em; line-height: 0.95; }
@@ -42,13 +42,13 @@ const REPO = "https://github.com/fraserbrownirl/ethereus";
           <span class="chip" data-phase="foundation" data-status="done"><span class="chip-dot"></span><span data-chip-label>Done</span></span>
         </div>
         <h3>Qwen3.5-4B — runs today</h3>
-        <p>The published Qwenputer checkpoint. Ethereus&apos;s firmware runs on it unchanged. A 4B model is a modest reasoner, but every guarantee on this site is already true here: unforgeable policy, exact arithmetic, zero-context knowledge.</p>
+        <p>The published Qwenputer checkpoint. Ethereus&apos;s firmware runs on it unchanged. A 4B model is a modest reasoner, but every guarantee on this site is already true here: exact checks, exact arithmetic, zero-context knowledge.</p>
       </article>
 
       <article class="step">
         <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">
           <span class="mono" style="font-size:0.7rem;font-weight:700;letter-spacing:0.08em;color:var(--ink-faint)">STEP 2 · A LARGER QWEN3.5</span>
-          <span class="chip" data-phase="firmware" data-status="in-progress"><span class="chip-dot"></span><span data-chip-label>In progress</span></span>
+          <span class="chip" data-phase="knowledge" data-status="planned"><span class="chip-dot"></span><span data-chip-label>In progress</span></span>
         </div>
         <h3>A larger Qwen3.5 — same compiler, wider merge</h3>
         <p>Same compiler, same merge script; only the width changes. This is a better reasoner on the same firmware with no new research, and it proves the compiled layers survive a bigger backbone.</p>

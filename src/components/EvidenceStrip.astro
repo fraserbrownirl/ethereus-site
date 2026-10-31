@@ -1,51 +1,25 @@
 ---
 import evidence from "../data/evidence.json";
-
-interface Props { ids?: string[] }
-const { ids } = Astro.props;
-const rows = ids ? evidence.filter((e) => ids.includes(e.key)) : evidence.slice(0, 4);
-// Keep home order: replay, instr/s, forged, KL
-const order = ["replay_mismatches", "instr_per_sec_l4", "forged_approvals", "kl_vs_base"];
-const ordered = [...rows].sort((a, b) => order.indexOf(a.key) - order.indexOf(b.key));
+const strip = evidence.slice(0, 4);
 ---
-
+<div class="ev-rule"></div>
 <div class="evidence" role="list">
-  {ordered.map((row) => (
+  {strip.map((row) => (
     <a class="evidence-cell" role="listitem" href={row.source_url} target="_blank" rel="noreferrer">
-      <div class="evidence-num mono">
-        {row.value_label}
-        {row.status === "not-yet-measured" && <span class="evidence-badge">not yet measured</span>}
-      </div>
+      <div class="ev-num mono" data-measured={row.measured_on} data-source={(row.source_url ?? "").replace("https://","")}>{row.value_label}</div>
       <div class="evidence-caption">{row.caption}</div>
-      <div class="evidence-meta">
-        <span class="mono evidence-provenance">{row.provenance}</span>
-        {row.measured_on && <span class="evidence-date"> · {row.measured_on}</span>}
-        {!row.measured_on && row.status === "not-yet-measured" && <span class="evidence-date"> · design intent — gate pending</span>}
-      </div>
       <span class="evidence-cta" aria-hidden="true">Source ↗</span>
     </a>
   ))}
 </div>
-
 <style>
-  .evidence {
-    display: grid; gap: 12px;
-    grid-template-columns: 1fr;
-  }
-  @media (min-width: 760px) { .evidence { grid-template-columns: repeat(4, 1fr); } }
-  .evidence-cell {
-    display: flex; flex-direction: column; gap: 6px;
-    padding: 16px 14px;
-    border: 1px solid var(--border); border-radius: var(--radius-md);
-    background: var(--surface);
-    min-height: 132px;
-  }
-  .evidence-cell:hover { border-color: var(--ink-soft); }
-  .evidence-num { font-size: 1.55rem; font-weight: 700; letter-spacing: -0.04em; line-height: 1; display: flex; align-items: baseline; gap: 8px; flex-wrap: wrap; }
-  .evidence-badge { font-size: 0.58rem; font-weight: 700; letter-spacing: 0.07em; text-transform: uppercase; color: var(--ink-faint); border: 1px solid var(--border); padding: 2px 6px; border-radius: 999px; background: var(--bg-soft); }
-  .evidence-caption { font-size: 0.82rem; color: var(--ink-soft); line-height: 1.45; }
-  .evidence-meta { margin-top: auto; font-size: 0.7rem; color: var(--ink-faint); line-height: 1.4; }
-  .evidence-provenance { color: var(--ink-faint); }
-  .evidence-cta { margin-top: 2px; font-size: 0.72rem; font-weight: 600; color: var(--ink-soft); }
-  .evidence-cell:hover .evidence-cta { color: var(--ink); }
+  .ev-rule{height:1px;background:var(--border);margin-bottom:16px}
+  .evidence{display:grid;gap:16px;grid-template-columns:1fr}
+  @media(min-width:760px){.evidence{grid-template-columns:repeat(4,1fr)}}
+  .evidence-cell{display:flex;flex-direction:column;gap:6px;padding:14px 0 0;border:none;background:transparent;min-height:0}
+  .evidence-cell:hover .ev-num{color:var(--accent-ink)}
+  .ev-num{font-size:1.9rem;font-weight:700;letter-spacing:-.04em;line-height:1}
+  .evidence-caption{font-size:.74rem;color:var(--ink-faint);letter-spacing:.04em;text-transform:uppercase;line-height:1.4}
+  .evidence-cta{font-size:.72rem;font-weight:600;color:var(--ink-soft)}
+  .evidence-cell:hover .evidence-cta{color:var(--ink)}
 </style>

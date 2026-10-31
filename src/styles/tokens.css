@@ -1,9 +1,23 @@
-/* ── Design tokens ──
-   Monochrome ink-on-paper + one verification accent.
-   Light is default; dark via [data-theme="dark"] + prefers-color-scheme fallback.
-*/
+/* Design tokens — dark default, amber accent, light via explicit toggle */
 :root {
-  /* ink / paper */
+  --bg: #0e0e0f;
+  --bg-soft: #161615;
+  --surface: #1c1c1b;
+  --border: #2a2a28;
+  --ink: #e8e6e1;
+  --ink-soft: #a8a6a0;
+  --ink-faint: #6b6a66;
+  --accent: #e89b2a;
+  --accent-soft: #2a1e0c;
+  --accent-ink: #f0c040;
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+  --max-prose: 72ch;
+  --max-figure: 1100px;
+  --nav-h: 56px;
+}
+[data-theme="light"] {
   --bg: #fafaf7;
   --bg-soft: #f0efeb;
   --surface: #ffffff;
@@ -11,39 +25,7 @@
   --ink: #141412;
   --ink-soft: #4a4945;
   --ink-faint: #8a8882;
-  /* accent — only for circuit-owned, verified state, links */
-  --accent: #ff3b30;
-  --accent-soft: #fff0ef;
-  --accent-ink: #c02a22;
-  /* radius / shadow */
-  --radius-sm: 6px;
-  --radius-md: 10px;
-  --radius-lg: 16px;
-  /* layout */
-  --max-prose: 72ch;
-  --max-figure: 880px;
-  --nav-h: 56px;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) {
-    --bg: #0f0f0e;
-    --bg-soft: #1a1a18;
-    --surface: #1e1e1c;
-    --border: #2a2a28;
-    --ink: #f0efe9;
-    --ink-soft: #a8a6a0;
-    --ink-faint: #6b6a66;
-    --accent-soft: #2a1210;
-  }
-}
-[data-theme="dark"] {
-  --bg: #0f0f0e;
-  --bg-soft: #1a1a18;
-  --surface: #1e1e1c;
-  --border: #2a2a28;
-  --ink: #f0efe9;
-  --ink-soft: #a8a6a0;
-  --ink-faint: #6b6a66;
-  --accent-soft: #2a1210;
+  --accent: #c07a14;
+  --accent-soft: #fdf2e0;
+  --accent-ink: #8a560e;
 }

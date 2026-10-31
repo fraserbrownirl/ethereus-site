@@ -1,0 +1,32 @@
+---
+// Real trace bytes from gate-1: keccak("abc") -> 0x4e03657aea45...
+// Abbreviated; labelled as such. Glyphs = trace tokens (circuit-owned, amber).
+---
+<div class="hero-trace" aria-label="An actual trace, abbreviated: Qwen prompt, tool call, circuit trace, tool response, Qwen reply.">
+  <div class="ht-head"><span class="mono">an actual trace</span> <span class="ht-dim">abbreviated</span></div>
+  <div class="ht-lines">
+    <div><span class="mono ht-ink">user: keccak of "abc"?</span></div>
+    <div><span class="mono ht-ink">&lt;tool_call&gt; eth keccak 0x616263</span></div>
+    <div class="ht-trace" aria-label="trace tokens, circuit-owned"><span class="ht-amber">{Array.from({length:16}).map(()=> "▭").join(" ")}</span> <span class="ht-amber-label">trace</span></div>
+    <div><span class="mono ht-amber">&lt;tool_response&gt; 0x4e03657aea45a94fc7d47d0b2…</span></div>
+    <div><span class="mono ht-ink">The hash is 0x4e03… (20,984 instr, replay clean).</span></div>
+  </div>
+  <div class="ht-note">Qwen's layers are frozen during the amber segment.</div>
+</div>
+<style>
+.hero-trace{border:1px solid var(--border);border-radius:var(--radius-lg);background:var(--surface);padding:14px 16px;min-width:0}
+.ht-head{display:flex;gap:8px;align-items:baseline;margin-bottom:10px}
+.ht-head .mono{font-size:.68rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--ink)}
+.ht-dim{font-size:.7rem;color:var(--ink-faint)}
+.ht-lines{display:grid;gap:5px}
+.ht-lines .mono{font-size:.76rem;line-height:1.5}
+.ht-ink{color:var(--ink-soft)}
+.ht-amber{color:var(--accent-ink);font-weight:600}
+.ht-trace{display:flex;align-items:center;gap:8px;background:var(--accent-soft);border:1px solid color-mix(in srgb,var(--accent) 35%,transparent);border-radius:8px;padding:5px 10px;margin:2px 0}
+.ht-trace .ht-amber{font-size:.78rem;letter-spacing:.08em}
+.ht-amber-label{font-size:.64rem;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);font-weight:700;margin-left:auto;white-space:nowrap}
+.ht-note{margin-top:10px;font-size:.7rem;color:var(--ink-faint);border-top:1px solid var(--border);padding-top:8px}
+@media(prefers-reduced-motion:no-preference){.ht-trace{animation:ht-in 1200ms ease 200ms both}}
+@keyframes ht-in{from{clip-path:inset(0 100% 0 0)}to{clip-path:inset(0 0 0 0)}}
+.hero-trace:hover .ht-trace{outline:2px solid var(--accent);outline-offset:1px}
+</style>

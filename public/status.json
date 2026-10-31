@@ -1,11 +1,36 @@
 {
-  "phases": {
-    "foundation": { "label": "Foundation \u2014 Qwenputer + RV32", "status": "done" },
-    "firmware": { "label": "Firmware \u2014 keccak / ABI / u256 / policy", "status": "in-progress" },
-    "knowledge": { "label": "Knowledge \u2014 ethskills in-state", "status": "planned" },
-    "roadmap_scale": { "label": "Backbone scale \u2014 Qwen \u2192 Kimi Linear \u2192 K3", "status": "planned" }
-  },
   "backbone": "qwen3.5-4b",
   "updated": "2026-10-31",
-  "note": "Build agent (Muse) updates this file; site fetches at runtime so no redeploy is needed."
+  "roadmap": {
+    "step1": "done",
+    "step2": "planned",
+    "step3": "planned",
+    "step4": "planned"
+  },
+  "phases": {
+    "foundation": {
+      "label": "Foundation \u2014 Qwenputer + RV32",
+      "status": "done"
+    },
+    "firmware": {
+      "label": "Firmware \u2014 keccak / ABI / u256 / policy",
+      "status": "in progress"
+    },
+    "knowledge": {
+      "label": "Knowledge \u2014 ethskills in-state",
+      "status": "planned"
+    },
+    "policy_gate": {
+      "label": "Policy gate \u2014 injection suite",
+      "status": "planned"
+    },
+    "verify": {
+      "label": "Verify \u2014 on-chain proofs",
+      "status": "planned"
+    },
+    "hackathon": {
+      "label": "Hackathon \u2014 hosted API + traces",
+      "status": "planned"
+    }
+  }
 }

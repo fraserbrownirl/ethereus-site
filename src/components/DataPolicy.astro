@@ -1,0 +1,33 @@
+---
+interface Props{ summaryOnly?: boolean }
+const { summaryOnly = false } = Astro.props;
+---
+{summaryOnly ? (
+  <p style="font-size:.84rem;color:var(--ink-soft)">Hackathon traces are captured only with per-key consent and never include keys or signing data. <a href="/hackathon#data-policy" style="text-decoration:underline;text-underline-offset:2px;text-decoration-color:var(--border)">How capture and consent work →</a></p>
+) : (
+<section id="data-policy">
+  <h2 style="margin:0 0 8px">What we capture, and what we never capture</h2>
+  <h3>Captured, with your consent (per API key, opt-in):</h3>
+  <ul>
+    <li>The prompt and the model's reply, as token ids and text</li>
+    <li>Every tool call and its tool response</li>
+    <li>The circuit trace and the per-token owner mask (which positions the circuit wrote)</li>
+    <li>The firmware hash, policy hash, chain id and timestamp of the session</li>
+  </ul>
+  <h3>Never captured, regardless of consent setting:</h3>
+  <ul>
+    <li>Private keys, seed phrases, API secrets, or signer material</li>
+    <li>Anything the <code>sign</code> tool sees — the <code>to</code>, <code>value</code>, <code>data</code> fields and the approval hash — unless the session is explicitly tagged <code>consent=full</code></li>
+    <li>Your IP address or account identity beyond the key's team id</li>
+  </ul>
+  <p><strong>How it's used:</strong> to fine-tune the Ethereus language model's tool use and to audit the policy gate. The compiled circuit layers are never trained. Captured data is not sold and not shared outside the project's training runs. Each participant can download their own captured traces.</p>
+  <p><strong>Consent controls:</strong> opt in when you create a key; revoke at any time from the key dashboard. Revocation stops future capture; traces already captured remain in the dataset. A key with capture off still gets the subsidy.</p>
+  <p style="font-size:.78rem;color:var(--ink-faint)">Capture happens in the API gateway, mirroring <span class="mono">chipformer/rv/capture.py</span> in the core repo; the <span class="mono">consent</span> field is written on every record.</p>
+</section>
+)}
+<style>
+  #data-policy h3{margin:16px 0 6px;font-size:.92rem}
+  #data-policy ul{margin:0 0 10px 18px}
+  #data-policy li,#data-policy p{font-size:.88rem;color:var(--ink-soft);line-height:1.6}
+  code{font-family:"JetBrains Mono",monospace;font-size:.82em;background:var(--surface);border:1px solid var(--border);padding:1px 5px;border-radius:4px}
+</style>

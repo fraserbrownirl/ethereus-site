@@ -1,0 +1,9 @@
+{
+  "project": "Ethereus",
+  "api": "Ethereus API",
+  "api_note": "the hosted endpoint; token name redacted and must not appear on the site",
+  "repo_core": "https://github.com/fraserbrownirl/ethereus",
+  "repo_site": "https://github.com/fraserbrownirl/ethereus-site",
+  "backbone": "Qwen3.5-4B",
+  "backbone_updated": "2026-10-31"
+}

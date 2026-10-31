@@ -6,7 +6,7 @@ import FigureB from "../components/FigureB.astro";
 const REPO = "https://github.com/fraserbrownirl/ethereus";
 ---
 
-<Base title="How it works" description="A CPU made of transformer layers, DeltaNet state as RAM, and a tool bridge that makes the policy gate unforgeable.">
+<Base title="How it works" description="Ethereus is an EVM agent whose spending rules, hashes and arithmetic run inside the model's own layers, where a prompt can't switch them off. Open weights, exact, replayable.">
   <style>
     .hero { padding: 36px 0 18px; }
     .hero h1 { margin: 0; font-size: clamp(2rem, 5vw, 3rem); letter-spacing: -0.05em; line-height: 0.95; }
@@ -49,14 +49,14 @@ const REPO = "https://github.com/fraserbrownirl/ethereus";
       <FigureB />
 
       <h2>4. Why the answers are exact.</h2>
-      <p>The circuit&apos;s arithmetic is exact in bf16 by construction, and every circuit token is checked in lockstep against a reference machine. Qwenputer replayed about 230,000 output positions with zero mismatches, and the model&apos;s plain-text behaviour stays within noise of base Qwen (KL 6e-4 against a 5e-4 floor). Ethereus inherits all of that; it adds firmware, not weights.</p>
-      <p>The trace is the proof. Each token is one write to the machine&apos;s memory — the whole execution is visible and replayable. Nothing about the answer is &ldquo;trust the server.&rdquo;</p>
+      <p>The circuit&apos;s arithmetic is exact in bf16 by construction, and every circuit token is checked in lockstep against a reference machine. Qwenputer replayed about 230,000 output positions with zero mismatches, and the model&apos;s plain-text behaviour stays close to the noise floor: KL 6e-4 against a 5e-4 floor between base Qwen's own kernels. Ethereus inherits all of that; it adds firmware, not weights.</p>
+      <p>The trace is the proof. Each token is one write to the machine&apos;s memory — the whole execution is visible and replayable. The answer doesn't depend on trusting a tool server; it depends on the published weights and firmware, which anyone can replay.</p>
       <div class="callout">
-        <p><strong>Claims policy:</strong> &ldquo;Unforgeable&rdquo; and &ldquo;cannot&rdquo; are used only for the position-ownership property — a mechanical fact of the bridge. Everything else is <em>exact on N cases</em> or <em>0 of N</em>, with a source link. Until a gate passes, its evidence slot shows <em>not yet measured</em>.</p>
+        <p><strong>Claims policy:</strong> &ldquo;cannot&rdquo; are used only for the position-ownership property — a mechanical fact of the bridge. Everything else is <em>exact on N cases</em> or <em>0 of N</em>, with a source link. Until a gate passes, its evidence slot shows <em>not yet measured</em>.</p>
       </div>
 
       <h2>5. What it costs.</h2>
-      <p>About 1.3 trace tokens per instruction and ~3,700 instructions per second on one L4 (Triton executor, batch&nbsp;1). A bare keccak permutation is ~95k instructions (~26&nbsp;s); a <span class="mono">u256</span> parse-and-print of a 78-digit literal is ~230k instructions; an ERC-20 <span class="mono">transfer</span> encoding is tens of seconds; a Merkle proof is minutes. A tool call can carry about 80 tokens of input; anything larger (bytecode, proofs, skills) lives in the in-weight filesystem.</p>
+      <p>About 1.3 trace tokens per instruction and ~3,700 instructions per second on one L4 (Triton executor, batch&nbsp;1). A bare keccak permutation is ~95k instructions (~26&nbsp;s); a <span class="mono">u256</span> parse-and-print of a 78-digit literal is ~230k instructions; an ERC-20 <span class="mono">transfer</span> encoding is tens of seconds; a Merkle proof is projected at ~2 minutes (8 keccaks of ≤532-byte nodes at ~20k instructions per permutation); not yet measured. A tool call can carry about 80 tokens of input; anything larger (bytecode, proofs, skills) lives in the in-weight filesystem.</p>
       <p>These are the limits of a 4B model with a compiled 32-bit CPU, not of the idea. The spec targets and known gaps live in the build repo — see the limits table there.</p>
       <p class="source-line">Numbers on this page: <a href="https://github.com/divagr18/qwenputer" target="_blank" rel="noreferrer">Qwenputer README</a> and <a href="https://github.com/divagr18/qwenputer/blob/main/experimental/riscv/docs/rv32.md" target="_blank" rel="noreferrer">experimental/riscv/docs/rv32.md</a>; Ethereus budgets: <a href="https://github.com/fraserbrownirl/ethereus/blob/main/experimental/riscv/docs/eth-bench.md" target="_blank" rel="noreferrer">eth-bench.md</a>.</p>
 
