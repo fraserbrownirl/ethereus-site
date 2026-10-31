@@ -59,7 +59,7 @@ const REPO = "https://github.com/fraserbrownirl/ethereus";
           <span class="mono" style="font-size:0.7rem;font-weight:700;letter-spacing:0.08em;color:var(--ink-faint)">STEP 3 · KIMI LINEAR 48B-A3B</span>
           <span class="chip" data-phase="roadmap_scale" data-status="planned"><span class="chip-dot"></span><span data-chip-label>Planned</span></span>
         </div>
-        <h3>Kimi Linear 48B-A3B — the risk lives here</h3>
+        <h3>Kimi Linear 48B-A3B — KDA port, MoE placement</h3>
         <p>Moonshot&apos;s open model built on Kimi Delta Attention: a gated delta rule with a per-channel forget gate — a superset of what the RAM trick needs. New work is in the compiler (KDA gate shapes), in placing compiled lookup tables inside a mixture-of-experts block, and in re-proving bit-exactness on Kimi&apos;s kernels. It fits on one or two 80&nbsp;GB GPUs.</p>
       </article>
 
@@ -68,7 +68,7 @@ const REPO = "https://github.com/fraserbrownirl/ethereus";
           <span class="mono" style="font-size:0.7rem;font-weight:700;letter-spacing:0.08em;color:var(--ink-faint)">STEP 4 · KIMI K3</span>
           <span class="chip" data-phase="roadmap_scale" data-status="planned"><span class="chip-dot"></span><span data-chip-label>Planned</span></span>
         </div>
-        <h3>Kimi K3 — 2.8T (104B active), sidecar executor</h3>
+        <h3>Kimi K3 (2.8T, 104B active) — sidecar executor, no re-merge</h3>
         <p>Three KDA layers for every attention layer, open weights. Because the executor already runs the circuit outside the backbone&apos;s own modules and injects the result, the circuit can run as a sidecar on one GPU beside a multi-node K3; no 2.8T re-save. A frontier-class reasoner that still cannot forge an approval or get a keccak wrong.</p>
       </article>
 
