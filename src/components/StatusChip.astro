@@ -1,0 +1,9 @@
+---
+interface Props { phase: string; status: "done" | "in-progress" | "planned" | string; label?: string; }
+const { phase, status, label } = Astro.props;
+const display = status === "in-progress" ? "In progress" : status === "done" ? "Done" : status === "planned" ? "Planned" : String(status);
+---
+<span class="chip" data-phase={phase} data-status={status} title={label ?? phase}>
+  <span class="chip-dot" aria-hidden="true"></span>
+  <span data-chip-label>{display}</span>
+</span>

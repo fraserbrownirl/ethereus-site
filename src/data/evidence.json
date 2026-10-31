@@ -1,0 +1,67 @@
+[
+  {
+    "key": "replay_mismatches",
+    "value": 0,
+    "value_label": "0",
+    "caption": "mismatches in 230,000 replayed circuit positions",
+    "provenance": "Qwenputer — reference replay of circuit output positions",
+    "source_url": "https://github.com/divagr18/qwenputer#benchmarks",
+    "measured_on": "2026-10-15",
+    "kind": "qwenputer"
+  },
+  {
+    "key": "instr_per_sec_l4",
+    "value": 3700,
+    "value_label": "3,700",
+    "caption": "instructions/s on one L4 — the compiled CPU",
+    "provenance": "Qwenputer rv32.md \u00a7 Executor v2 (batch 1, Triton, ~3,699 instr/s)",
+    "source_url": "https://github.com/divagr18/qwenputer/blob/main/experimental/riscv/docs/rv32.md",
+    "measured_on": "2026-10-20",
+    "kind": "qwenputer"
+  },
+  {
+    "key": "forged_approvals",
+    "value": 0,
+    "value_label": "0",
+    "caption": "forged approvals in 50 injection attempts \u2014 the policy gate",
+    "provenance": "Ethereus policy gate \u2014 injection suite (awaiting Gate 1 run)",
+    "source_url": "https://github.com/fraserbrownirl/ethereus/blob/main/experimental/riscv/docs/eth-bench.md",
+    "measured_on": null,
+    "kind": "ethereus",
+    "status": "not-yet-measured",
+    "note": "Gate 1 final will replace with measured count; slot shows design intent until then."
+  },
+  {
+    "key": "kl_vs_base",
+    "value": 0.0006,
+    "value_label": "~\u20096e\u20114",
+    "caption": "KL vs base Qwen on plain text \u2014 language is unchanged",
+    "provenance": "Qwenputer \u2014 mean KL 6.1e-4 across 16 prompts (noise floor 5.1e-4)",
+    "source_url": "https://github.com/divagr18/qwenputer/blob/main/experimental/riscv/docs/rv32.md#checks",
+    "measured_on": "2026-10-18",
+    "kind": "qwenputer"
+  },
+  {
+    "key": "exact_cases_keccak_u256",
+    "value": 2000,
+    "value_label": "2,000",
+    "caption": "random keccak + u256 cases \u2014 0 wrong, replay clean (target)",
+    "provenance": "Ethereus eth.py --cases 2000 (preliminary smoke: 50+50 @ 0 wrong; full run pending)",
+    "source_url": "https://github.com/fraserbrownirl/ethereus/blob/main/experimental/riscv/docs/eth-bench.md",
+    "measured_on": null,
+    "kind": "ethereus",
+    "status": "not-yet-measured",
+    "note": "Preliminary smoke clean; final gate replaces this row."
+  },
+  {
+    "key": "eth_benchmark_delta",
+    "value": null,
+    "value_label": "\u2014",
+    "caption": "60-question Ethereum knowledge benchmark: base vs Ethereus at zero added context",
+    "provenance": "Ethereum knowledge suite (planned \u2014 ethskills@~50k tokens \u2192 zero-context in-state)",
+    "source_url": "https://github.com/fraserbrownirl/ethereus/blob/main/docs/q35-skills.md",
+    "measured_on": null,
+    "kind": "ethereus",
+    "status": "not-yet-measured"
+  }
+]

@@ -1,0 +1,84 @@
+---
+// Figure A — "One row is one byte"  (themed, redrawn — do not copy gdn-ram.png)
+// Shows a 128×128 state grid, highlighted row, one-hot write/read, and register/RAM/ROM spread.
+interface Props { id?: string }
+const { id = `fig-a-${Math.random().toString(36).slice(2, 7)}` } = Astro.props;
+---
+
+<figure class="fig-a" role="group" aria-labelledby={`${id}-cap`}>
+  <figcaption id={`${id}-cap`} class="kicker" style="margin-bottom:10px">One row is one byte</figcaption>
+  <div class="fig-a-stage">
+    <svg viewBox="0 0 760 320" role="img" aria-label="A DeltaNet head state is a 128 by 128 matrix; a one-hot write replaces exactly one row and a one-hot query reads it back. The CPU spreads registers, RAM and ROM across dozens of heads." xmlns="http://www.w3.org/2000/svg">
+      <!-- big grid -->
+      <g transform="translate(20,16)">
+        <rect x="0" y="0" width="176" height="176" rx="8" fill="var(--surface)" stroke="var(--border)" />
+        <!-- faint grid lines -->
+        <g stroke="var(--border)" stroke-width="0.5" opacity="0.9">
+          {Array.from({ length: 9 }).map((_, i) => <line x1={18 + i * 16} y1="8" x2={18 + i * 16} y2="168" />)}
+          {Array.from({ length: 9 }).map((_, i) => <line x1="8" y1={8 + i * 16} x2="168" y2={8 + i * 16} />)}
+        </g>
+        <!-- highlighted row -->
+        <rect x="8" y="88" width="160" height="16" rx="2" fill="var(--accent-soft)" stroke="var(--accent)" stroke-width="1.1" />
+        <text x="88" y="99" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="6.5" font-weight="600" fill="var(--accent-ink)">one row = 128 bytes</text>
+        <text x="88" y="206" text-anchor="middle" font-family="Inter, sans-serif" font-size="8.2" font-weight="600" fill="var(--ink-soft)">128 × 128 state</text>
+        <text x="88" y="218" text-anchor="middle" font-family="Inter, sans-serif" font-size="7" fill="var(--ink-faint)">one DeltaNet head</text>
+
+        <!-- write arrow (top) -->
+        <g transform="translate(196,18)">
+          <rect x="0" y="0" width="88" height="52" rx="8" fill="var(--bg-soft)" stroke="var(--border)" />
+          <text x="44" y="16" text-anchor="middle" font-family="Inter, sans-serif" font-size="7" font-weight="700" letter-spacing="0.07em" fill="var(--ink-faint)">ONE-HOT KEY</text>
+          <text x="44" y="28" text-anchor="middle" font-family="Inter, sans-serif" font-size="7" fill="var(--ink-soft)">picks one row</text>
+          <text x="44" y="42" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="6.4" fill="var(--ink)">β=1 · α=1</text>
+          <path d="M44 52 L44 72" stroke="var(--ink)" stroke-width="1.2" marker-end="url(#arrow-ink)" />
+          <text x="50" y="64" font-family="Inter, sans-serif" font-size="6.6" font-weight="600" fill="var(--ink-soft)">write</text>
+        </g>
+        <!-- read arrow (bottom) -->
+        <g transform="translate(196,112)">
+          <rect x="0" y="0" width="88" height="52" rx="8" fill="var(--bg-soft)" stroke="var(--border)" />
+          <text x="44" y="16" text-anchor="middle" font-family="Inter, sans-serif" font-size="7" font-weight="700" letter-spacing="0.07em" fill="var(--ink-faint)">ONE-HOT QUERY</text>
+          <text x="44" y="28" text-anchor="middle" font-family="Inter, sans-serif" font-size="7" fill="var(--ink-soft)">reads it back</text>
+          <text x="44" y="42" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="6.4" fill="var(--ink)">exact</text>
+          <path d="M-18 8 L-4 8" stroke="var(--ink)" stroke-width="1.2" marker-end="url(#arrow-ink)" />
+          <text x="-20" y="5" font-family="Inter, sans-serif" font-size="6.6" font-weight="600" fill="var(--ink-soft)">read</text>
+        </g>
+        <defs><marker id="arrow-ink" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="var(--ink)" /></marker></defs>
+      </g>
+
+      <!-- spread across heads -->
+      <g transform="translate(340,16)">
+        <text x="0" y="10" font-family="Inter, sans-serif" font-size="7" font-weight="700" letter-spacing="0.09em" fill="var(--ink-faint)">SPREAD ACROSS HEADS</text>
+        {[
+          { x: 0, y: 22, w: 112, h: 64, label: "Registers", sub: "32 × 32-bit + PC", accent: true },
+          { x: 122, y: 22, w: 128, h: 64, label: "RAM", sub: "32 KB · 32 heads", accent: false },
+          { x: 260, y: 22, w: 142, h: 64, label: "ROM · DROM", sub: "256 KB + 128 KB", accent: false },
+        ].map((b) => (
+          <g>
+            <rect x={b.x} y={b.y} width={b.w} height={b.h} rx="8" fill={b.accent ? "var(--accent-soft)" : "var(--surface)"} stroke={b.accent ? "var(--accent)" : "var(--border)"} stroke-opacity={b.accent ? "0.9" : "1"} />
+            <text x={b.x + b.w / 2} y={b.y + 28} text-anchor="middle" font-family="Inter, sans-serif" font-size="8.4" font-weight="700" fill={b.accent ? "var(--accent-ink)" : "var(--ink)"}>{b.label}</text>
+            <text x={b.x + b.w / 2} y={b.y + 42} text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="6.8" fill="var(--ink-soft)">{b.sub}</text>
+            <g stroke="var(--border)" stroke-width="0.4" opacity="0.9">
+              {Array.from({ length: 5 }).map((_, i) => <line x1={b.x + 10 + i * 18} y1={b.y + 50} x2={b.x + 10 + i * 18} y2={b.y + 56} />)}
+            </g>
+          </g>
+        ))}
+        <text x="0" y="104" font-family="Inter, sans-serif" font-size="7.6" fill="var(--ink-faint)">A few dozen heads hold the whole machine. Nothing here is learned — the compiler laid it out.</text>
+        <g transform="translate(0,118)">
+          <rect x="0" y="0" width="14" height="8" rx="2" fill="var(--accent-soft)" stroke="var(--accent)" />
+          <text x="18" y="6.5" font-family="Inter, sans-serif" font-size="7" fill="var(--ink-soft)">circuit-owned row</text>
+          <rect x="108" y="0" width="14" height="8" rx="2" fill="var(--surface)" stroke="var(--border)" />
+          <text x="126" y="6.5" font-family="Inter, sans-serif" font-size="7" fill="var(--ink-soft)">ordinary state</text>
+        </g>
+      </g>
+
+      <!-- divider -->
+      <line x1="20" y1="250" x2="740" y2="250" stroke="var(--border)" />
+      <text x="20" y="268" font-family="Inter, sans-serif" font-size="7.4" fill="var(--ink-faint)">Gate held open (α=1), write strength β=1. Each update replaces exactly one row — that&apos;s a RAM write. The same head&apos;s query is the read.</text>
+      <text x="20" y="282" font-family="Inter, sans-serif" font-size="7.4" fill="var(--ink-faint)">Source: Qwenputer README &amp; rv32.md · Redrawn — not copied — from docs/gdn-ram.png.</text>
+    </svg>
+  </div>
+</figure>
+
+<style>
+  .fig-a-stage { overflow-x: auto; border: 1px solid var(--border); border-radius: var(--radius-lg); background: var(--surface); padding: 14px; }
+  .fig-a-stage svg { display: block; width: 100%; min-width: 560px; }
+</style>

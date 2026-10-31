@@ -1,0 +1,45 @@
+[
+  {
+    "work": "Qwenputer",
+    "url": "https://github.com/divagr18/qwenputer",
+    "author": "Divyansh Agrawal",
+    "what": "The compiler, the RISC-V CPU, the bridge, the filesystem, every mechanism number",
+    "license": "MIT (code) \u00b7 Apache-2.0 (weights)"
+  },
+  {
+    "work": "nesformer",
+    "url": "https://github.com/dbreunig/nesformer",
+    "author": "Drew Breunig",
+    "what": "The standalone tiny-model development pattern and the host-side split",
+    "license": "MIT"
+  },
+  {
+    "work": "ethskills + evm-audit-skills",
+    "url": "https://github.com/austintgriffith/ethskills",
+    "url2": "https://github.com/austintgriffith/evm-audit-skills",
+    "author": "Austin Griffith",
+    "what": "The onchain knowledge base loaded into the filesystem",
+    "license": "Check repo license before launch"
+  },
+  {
+    "work": "Qwen3.5-4B",
+    "url": "https://huggingface.co/Qwen/Qwen3.5-4B",
+    "author": "Qwen team",
+    "what": "The backbone",
+    "license": "Apache-2.0"
+  },
+  {
+    "work": "Kimi Linear",
+    "url": "https://arxiv.org/abs/2510.26692",
+    "author": "Moonshot AI",
+    "what": "Roadmap target architecture (KDA \u2014 gated delta with per-channel forget)",
+    "license": "Paper cited; weights not used in v1"
+  },
+  {
+    "work": "Kimi K3",
+    "url": "https://arxiv.org/abs/2607.24653",
+    "author": "Moonshot AI",
+    "what": "Roadmap endgame: 2.8T total / 104B active, sidecar executor (no re-merge)",
+    "license": "Paper cited; weights not used in v1"
+  }
+]

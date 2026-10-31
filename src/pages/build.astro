@@ -1,0 +1,100 @@
+---
+import Base from "../layouts/Base.astro";
+
+const REPO = "https://github.com/fraserbrownirl/ethereus";
+const REPO_URL = REPO;
+---
+
+<Base title="Build" description="Repo, what runs today, phase status, and how to run the demo.">
+  <style>
+    .hero { padding: 36px 0 18px; }
+    .hero h1 { margin: 0; font-size: clamp(2rem, 5vw, 3rem); letter-spacing: -0.05em; line-height: 0.95; }
+    .hero p { margin: 10px 0 0; max-width: 60ch; color: var(--ink-soft); }
+    .page { max-width: var(--max-prose); }
+    .page h2 { margin: 26px 0 10px; font-size: 1rem; letter-spacing: -0.02em; }
+    .page p, .page li { font-size: 0.9rem; color: var(--ink-soft); line-height: 1.62; }
+    .page ul { margin: 8px 0 0; padding-left: 18px; }
+    .card { border: 1px solid var(--border); border-radius: var(--radius-lg); background: var(--surface); padding: 16px; }
+    .chips { display: grid; gap: 10px; grid-template-columns: 1fr; }
+    @media (min-width: 560px) { .chips { grid-template-columns: 1fr 1fr; } }
+    .chip-row { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 10px 12px; border: 1px solid var(--border); border-radius: var(--radius-md); background: var(--surface); }
+    .chip-row .mono { font-size: 0.78rem; font-weight: 600; color: var(--ink); }
+    .code {
+      display: block; overflow-x: auto; padding: 12px 14px;
+      border: 1px solid var(--border); border-radius: var(--radius-md);
+      background: var(--bg-soft); font-family: "JetBrains Mono", monospace;
+      font-size: 0.78rem; line-height: 1.6; color: var(--ink); white-space: pre;
+    }
+    .callout { border-left: 3px solid var(--accent); background: var(--surface); border: 1px solid var(--border); border-left-color: var(--accent); border-radius: var(--radius-md); padding: 12px 14px; }
+    .callout p { margin: 0; font-size: 0.84rem; }
+  </style>
+
+  <section class="wrap hero">
+    <p class="kicker">Build — get to the code</p>
+    <h1>Run it today.</h1>
+    <p>The repo is the product. Everything on this site is sourced from what&apos;s already measured there.</p>
+    <div style="margin-top:14px;display:flex;flex-wrap:wrap;gap:10px">
+      <a class="btn btn-primary" href={REPO_URL} target="_blank" rel="noreferrer">View the code on GitHub →</a>
+      <a class="btn btn-secondary" href="/how-it-works">How it works</a>
+    </div>
+  </section>
+
+  <section class="wrap">
+    <div class="page">
+      <div class="card">
+        <p class="kicker" style="margin:0 0 8px">Repo</p>
+        <p style="margin:0"><a href={REPO_URL} target="_blank" rel="noreferrer" class="mono" style="text-decoration:underline;text-underline-offset:3px;text-decoration-color:var(--border)">{REPO_URL}</a></p>
+        <p style="margin:8px 0 0">Core research code (Qwenputer + RV32 + Ethereus firmware) lives at <span class="mono">fraserbrownirl/ethereus</span>. This site is <span class="mono">fraserbrownirl/ethereus-site</span> — frontend only, no weights, no Python.</p>
+      </div>
+
+      <h2>What runs today</h2>
+      <ul>
+        <li>Qwenputer checkpoint on <span class="mono">Qwen3.5-4B</span>: 11 compiled layers, ~1M nonzero weights, Triton executor at ~3,700 instr/s on one L4.</li>
+        <li>RV32 firmware: keccak, ABI, <span class="mono">u256</span>, EVM helpers, policy check — <span class="mono">eth-bridge.elf</span> (78&nbsp;KB text / 262&nbsp;KB ROM).</li>
+        <li>Smoke gates: 50 keccak + 50 <span class="mono">u256</span> cases replayed clean; full <span class="mono">eth.py --cases 2000</span> is next (see <a href="https://github.com/fraserbrownirl/ethereus/blob/main/experimental/riscv/docs/eth-bench.md" target="_blank" rel="noreferrer">eth-bench.md</a>).</li>
+        <li>Language fidelity: KL ~6e-4 vs base Qwen on plain text — the model still reads and writes like itself.</li>
+      </ul>
+
+      <h2>Phase status <span class="mono" style="font-weight:500;color:var(--ink-faint)">· updated <span data-updated>2026-10-31</span></span></h2>
+      <p style="font-size:0.78rem;color:var(--ink-faint)">Source: <span class="mono">public/status.json</span> — fetched at runtime, so chips change without a redeploy.</p>
+      <div class="chips">
+        <div class="chip-row"><span class="mono">Foundation · Qwenputer + RV32</span> <span class="chip" data-phase="foundation" data-status="done"><span class="chip-dot"></span><span data-chip-label>Done</span></span></div>
+        <div class="chip-row"><span class="mono">Firmware · keccak / ABI / u256 / policy</span> <span class="chip" data-phase="firmware" data-status="in-progress"><span class="chip-dot"></span><span data-chip-label>In progress</span></span></div>
+        <div class="chip-row"><span class="mono">Knowledge · ethskills in-state</span> <span class="chip" data-phase="knowledge" data-status="planned"><span class="chip-dot"></span><span data-chip-label>Planned</span></span></div>
+        <div class="chip-row"><span class="mono">Backbone scale · Qwen → Kimi</span> <span class="chip" data-phase="roadmap_scale" data-status="planned"><span class="chip-dot"></span><span data-chip-label>Planned</span></span></div>
+      </div>
+
+      <h2>How to run the demo</h2>
+      <span class="code">{`# from the core repo (ethereus)
+git clone https://github.com/fraserbrownirl/ethereus && cd ethereus/experimental/riscv
+uv sync --extra hf
+
+# budgets + smoke gates (no GPU needed for the reference half)
+uv run python -m chipformer.rv.eth --cases 50        # keccak + u256 smoke
+uv run pytest tests/test_rv_eth.py -q                # eth firmware contract
+
+# full gate (when ready)
+uv run python -m chipformer.rv.eth --cases 2000       # ~2k cases, trace-permutation budget
+
+# interactive (needs Qwenputer checkpoint + L4)
+hf download divagr1925/Qwen3.5-4B-Qwenputer --local-dir qwenputer-rv
+uv run python -m chipformer.rv.chat qwenputer-rv --firmware tests/data/rv/eth-bridge.elf \\
+  --ask "Use eth: keccak of 0x1234?"`}</span>
+      <p style="margin-top:10px">See <a href="https://github.com/fraserbrownirl/ethereus/blob/main/experimental/riscv/README.md" target="_blank" rel="noreferrer">experimental/riscv/README.md</a> and <a href="https://github.com/divagr18/qwenputer#quickstart" target="_blank" rel="noreferrer">Qwenputer quickstart</a>.</p>
+
+      <h2>How to contribute</h2>
+      <ul>
+        <li>Read the website spec at <span class="mono">docs/website-build-spec.md</span> in the core repo — it&apos;s the source of truth for any mechanism claim.</li>
+        <li>Numbers come from <span class="mono">experimental/riscv/docs/eth-bench.md</span> and the Qwenputer README — the site agent never invents a number.</li>
+        <li>Site PRs go to <span class="mono">fraserbrownirl/ethereus-site</span> on branch <span class="mono">feat/site-v1</span> → preview deploy → <span class="mono">main</span>.</li>
+        <li>Core PRs go to <span class="mono">fraserbrownirl/ethereus</span> — keep <span class="mono">ethereus-site/</span> out of that repo.</li>
+      </ul>
+
+      <div class="callout" style="margin-top:16px">
+        <p><strong>Hackathon?</strong> This is a pure &ldquo;run the code&rdquo; page in v1. If you want hackathon track dates/rules here, say the word and we&apos;ll add a section that also reads from <span class="mono">status.json</span>.</p>
+      </div>
+    </div>
+  </section>
+
+  <div style="height:28px"></div>
+</Base>

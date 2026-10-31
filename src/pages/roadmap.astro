@@ -1,0 +1,87 @@
+---
+import Base from "../layouts/Base.astro";
+import FigureC from "../components/FigureC.astro";
+
+const REPO = "https://github.com/fraserbrownirl/ethereus";
+---
+
+<Base title="Roadmap" description="The firmware is finished once; the backbone is swappable — Qwen3.5-4B today, Kimi K3 tomorrow.">
+  <style>
+    .hero { padding: 36px 0 18px; }
+    .hero h1 { margin: 0; font-size: clamp(2rem, 5vw, 3rem); letter-spacing: -0.05em; line-height: 0.95; }
+    .hero p { margin: 10px 0 0; max-width: 62ch; color: var(--ink-soft); }
+    .steps { display: grid; gap: 18px; max-width: var(--max-prose); }
+    .step { border: 1px solid var(--border); border-radius: var(--radius-lg); background: var(--surface); padding: 16px; }
+    .step h3 { margin: 6px 0 6px; font-size: 1rem; letter-spacing: -0.02em; }
+    .step p { margin: 0 0 8px; font-size: 0.9rem; color: var(--ink-soft); line-height: 1.6; }
+    .never {
+      border: 1px solid var(--border); border-radius: var(--radius-lg);
+      background: var(--bg-soft); padding: 16px; max-width: var(--max-prose);
+    }
+    .never h3 { margin: 0 0 6px; font-size: 0.95rem; }
+    .never p { margin: 0; font-size: 0.88rem; color: var(--ink-soft); line-height: 1.6; }
+    .sources { max-width: var(--max-prose); font-size: 0.78rem; color: var(--ink-faint); }
+    .sources a { text-decoration: underline; text-underline-offset: 2px; text-decoration-color: var(--border); }
+  </style>
+
+  <section class="wrap hero">
+    <p class="kicker">Roadmap — one argument</p>
+    <h1>The firmware is finished once; the backbone is swappable.</h1>
+    <p>Every guarantee on this site is already true on Qwen3.5-4B. A frontier model doesn&apos;t need new firmware — just a wider (or different) host for the same circuit.</p>
+  </section>
+
+  <section class="wrap" style="padding-bottom:18px">
+    <FigureC />
+  </section>
+
+  <section class="wrap section-pad section-rule">
+    <div class="steps">
+      <article class="step">
+        <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">
+          <span class="mono" style="font-size:0.7rem;font-weight:700;letter-spacing:0.08em;color:var(--ink-faint)">STEP 1 · QWEN3.5-4B · TODAY</span>
+          <span class="chip" data-phase="foundation" data-status="done"><span class="chip-dot"></span><span data-chip-label>Done</span></span>
+        </div>
+        <h3>Qwen3.5-4B — runs today</h3>
+        <p>The published Qwenputer checkpoint. Ethereus&apos;s firmware runs on it unchanged. A 4B model is a modest reasoner, but every guarantee on this site is already true here: unforgeable policy, exact arithmetic, zero-context knowledge.</p>
+      </article>
+
+      <article class="step">
+        <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">
+          <span class="mono" style="font-size:0.7rem;font-weight:700;letter-spacing:0.08em;color:var(--ink-faint)">STEP 2 · A LARGER QWEN3.5</span>
+          <span class="chip" data-phase="firmware" data-status="in-progress"><span class="chip-dot"></span><span data-chip-label>In progress</span></span>
+        </div>
+        <h3>A larger Qwen3.5 — same compiler, wider merge</h3>
+        <p>Same compiler, same merge script; only the width changes. This is a better reasoner on the same firmware with no new research, and it proves the compiled layers survive a bigger backbone.</p>
+      </article>
+
+      <article class="step">
+        <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">
+          <span class="mono" style="font-size:0.7rem;font-weight:700;letter-spacing:0.08em;color:var(--ink-faint)">STEP 3 · KIMI LINEAR 48B-A3B</span>
+          <span class="chip" data-phase="roadmap_scale" data-status="planned"><span class="chip-dot"></span><span data-chip-label>Planned</span></span>
+        </div>
+        <h3>Kimi Linear 48B-A3B — the risk lives here</h3>
+        <p>Moonshot&apos;s open model built on Kimi Delta Attention: a gated delta rule with a per-channel forget gate — a superset of what the RAM trick needs. New work is in the compiler (KDA gate shapes), in placing compiled lookup tables inside a mixture-of-experts block, and in re-proving bit-exactness on Kimi&apos;s kernels. It fits on one or two 80&nbsp;GB GPUs.</p>
+      </article>
+
+      <article class="step">
+        <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">
+          <span class="mono" style="font-size:0.7rem;font-weight:700;letter-spacing:0.08em;color:var(--ink-faint)">STEP 4 · KIMI K3</span>
+          <span class="chip" data-phase="roadmap_scale" data-status="planned"><span class="chip-dot"></span><span data-chip-label>Planned</span></span>
+        </div>
+        <h3>Kimi K3 — 2.8T (104B active), sidecar executor</h3>
+        <p>Three KDA layers for every attention layer, open weights. Because the executor already runs the circuit outside the backbone&apos;s own modules and injects the result, the circuit can run as a sidecar on one GPU beside a multi-node K3; no 2.8T re-save. A frontier-class reasoner that still cannot forge an approval or get a keccak wrong.</p>
+      </article>
+
+      <div class="never">
+        <h3>What never changes</h3>
+        <p>The firmware, the four tools, the tests, the policy format, the attestation. Choosing Ethereus today does not lock you to a 4B model. <a href={REPO} target="_blank" rel="noreferrer" style="text-decoration:underline;text-underline-offset:2px;text-decoration-color:var(--border)">View the code</a> and the build stays compatible.</p>
+      </div>
+
+      <p class="sources">
+        Sources: <a href="https://arxiv.org/abs/2607.24653" target="_blank" rel="noreferrer">Kimi K3 technical report (arXiv 2607.24653)</a> ·
+        <a href="https://arxiv.org/abs/2510.26692" target="_blank" rel="noreferrer">Kimi Linear (arXiv 2510.26692)</a> ·
+        <a href="https://github.com/divagr18/qwenputer" target="_blank" rel="noreferrer">Qwenputer</a>
+      </p>
+    </div>
+  </section>
+</Base>
