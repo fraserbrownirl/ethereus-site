@@ -1,0 +1,79 @@
+---
+import "../styles/global.css";
+import Nav from "../components/Nav.astro";
+import Footer from "../components/Footer.astro";
+
+interface Props {
+  title: string;
+  description?: string;
+  ogImage?: string;
+}
+const {
+  title,
+  description = "Ethereus is an EVM agent whose spending rules, hashes and arithmetic run inside the model's own layers, where a prompt can't switch them off. Open weights, exact, replayable.",
+  ogImage = "/og.svg",
+} = Astro.props;
+const canonical = Astro.url.href;
+const siteTitle = "Ethereus";
+const fullTitle = Astro.url.pathname === "/" ? `${siteTitle} — Ethereum in the weights.` : `${title} — ${siteTitle}`;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <meta name="generator" content={Astro.generator} />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={new URL(ogImage, Astro.site ?? Astro.url.origin).href} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="icon" href="/favicon.ico" />
+    <meta name="theme-color" content="#fafaf7" />
+    <script is:inline>
+      // theme: respect saved pref, else system
+      try {
+        const saved = localStorage.getItem("ethereus-theme");
+        if (saved === "dark" || saved === "light") document.documentElement.setAttribute("data-theme", saved);
+      } catch {}
+    </script>
+  </head>
+  <body>
+    <a class="skip" href="#main">Skip to content</a>
+    <Nav />
+    <main id="main"><slot /></main>
+    <Footer />
+
+    <script is:inline>
+      // Runtime status refresh: chips update without redeploy (spec)
+      (async () => {
+        try {
+          const res = await fetch("/status.json", { cache: "no-store" });
+          if (!res.ok) return;
+          const data = await res.json();
+          const phases = data.phases || data;
+          for (const [key, entry] of Object.entries(phases)) {
+            if (!entry || typeof entry !== "object") continue;
+            const status = entry.status;
+            document.querySelectorAll(`[data-phase="${key}"]`).forEach((el) => {
+              el.setAttribute("data-status", status);
+              const dot = el.querySelector(".chip-dot");
+              const label = el.querySelector("[data-chip-label]");
+              if (label) label.textContent = status === "in-progress" ? "In progress" : status === "done" ? "Done" : status === "planned" ? "Planned" : String(status);
+            });
+          }
+          const u = document.querySelector("[data-updated]");
+          if (u && data.updated) u.textContent = data.updated;
+        } catch {}
+      })();
+    </script>
+  </body>
+</html>

@@ -1,0 +1,25 @@
+---
+import evidence from "../data/evidence.json";
+const strip = evidence.slice(0, 4);
+---
+<div class="ev-rule"></div>
+<div class="evidence" role="list">
+  {strip.map((row) => (
+    <a class="evidence-cell" role="listitem" href={row.source_url} target="_blank" rel="noreferrer">
+      <div class="ev-num mono" data-measured={row.measured_on} data-source={(row.source_url ?? "").replace("https://","")}>{row.value_label}</div>
+      <div class="evidence-caption">{row.caption}</div>
+      <span class="evidence-cta" aria-hidden="true">Source ↗</span>
+    </a>
+  ))}
+</div>
+<style>
+  .ev-rule{height:1px;background:var(--border);margin-bottom:16px}
+  .evidence{display:grid;gap:16px;grid-template-columns:1fr}
+  @media(min-width:760px){.evidence{grid-template-columns:repeat(4,1fr)}}
+  .evidence-cell{display:flex;flex-direction:column;gap:6px;padding:14px 0 0;border:none;background:transparent;min-height:0}
+  .evidence-cell:hover .ev-num{color:var(--accent-ink)}
+  .ev-num{font-size:1.9rem;font-weight:700;letter-spacing:-.04em;line-height:1}
+  .evidence-caption{font-size:.74rem;color:var(--ink-faint);letter-spacing:.04em;text-transform:uppercase;line-height:1.4}
+  .evidence-cta{font-size:.72rem;font-weight:600;color:var(--ink-soft)}
+  .evidence-cell:hover .evidence-cta{color:var(--ink)}
+</style>

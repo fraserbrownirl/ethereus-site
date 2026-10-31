@@ -1,0 +1,38 @@
+---
+import Base from "../layouts/Base.astro";
+import names from "../data/names.json";
+import creditsData from "../data/credits.json";
+const META = "Ethereus is an EVM agent whose spending rules, hashes and arithmetic run inside the model's own layers, where a prompt can't switch them off. Open weights, exact, replayable.";
+---
+
+<Base title="Credits" description={META}>
+<style>
+  .hero{padding:36px 0 18px}.hero h1{margin:0;font-size:clamp(2rem,5vw,3rem);letter-spacing:-.05em;line-height:.95}.hero h1.display{font-size:clamp(2.1rem,5vw,3.2rem)}.hero p{margin:10px 0 0;max-width:60ch;color:var(--ink-soft)}
+  .list{display:grid;gap:12px;max-width:var(--max-prose)}.row{border:1px solid var(--border);border-radius:var(--radius-lg);background:var(--surface);padding:16px}
+  .row h3{margin:0;font-size:.98rem;letter-spacing:-.02em}.row h3 a{text-decoration:underline;text-underline-offset:3px;text-decoration-color:var(--border)}.row h3 a:hover{text-decoration-color:var(--ink)}
+  .meta{margin:6px 0 0;font-size:.8rem;color:var(--ink-faint)}.meta span+span::before{content:" · "}
+  .what{margin:8px 0 0;font-size:.88rem;color:var(--ink-soft);line-height:1.55}
+  .legal{max-width:var(--max-prose);font-size:.84rem;color:var(--ink-soft);line-height:1.6}.legal a{text-decoration:underline;text-underline-offset:2px;text-decoration-color:var(--border)}
+</style>
+<section class="wrap hero">
+  <p class="kicker">Credits — the work this stands on</p>
+  <h1 class="display">Standing on good work.</h1>
+  <p>Every mechanism number on this site comes from one of these projects. Authors are named exactly as they name themselves in their repos. No photos of any person on the site.</p>
+</section>
+<section class="wrap"><div class="list">
+  {creditsData.map((c) => (
+    <article class="row">
+      <h3><a href={c.url} target="_blank" rel="noreferrer">{c.work}</a> {c.url2 && <>· <a href={c.url2} target="_blank" rel="noreferrer">evm-audit-skills</a></>}</h3>
+      <p class="meta"><span>by {c.author}</span><span>{c.license}</span></p>
+      <p class="what">{c.what}</p>
+      {c.url && <p style="margin:8px 0 0"><a href={c.url} target="_blank" rel="noreferrer" class="mono" style="font-size:.78rem;color:var(--ink-soft);text-decoration:underline;text-underline-offset:3px;text-decoration-color:var(--border)">{c.url} ↗</a></p>}
+    </article>
+  ))}
+</div>
+<div style="height:20px"></div>
+<div class="legal">
+  <p>Site content is <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>. Code in <a href={names.repo_site} target="_blank" rel="noreferrer">{names.repo_site.replace("https://","")}</a> is <a href="https://opensource.org/license/mit">MIT</a>. Model weights derived from <a href="https://huggingface.co/Qwen/Qwen3.5-4B" target="_blank" rel="noreferrer">Qwen3.5-4B</a> are <a href="https://www.apache.org/licenses/LICENSE-2.0">Apache-2.0</a>, as a modified version of Qwen's weights (config widened, compiled layers appended, Qwen's own weights unchanged).</p>
+  <p style="margin-top:10px"><a href="/">← Home</a> · <a href="/how-it-works">How it works</a> · <a href={names.repo_core} target="_blank" rel="noreferrer">View the code</a></p>
+</div></section>
+<div style="height:28px"></div>
+</Base>

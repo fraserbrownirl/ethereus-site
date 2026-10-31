@@ -1,0 +1,90 @@
+---
+import names from "../data/names.json";
+const nav = [
+  { href: "/", label: "Home" },
+  { href: "/how-it-works", label: "How it works" },
+  { href: "/roadmap", label: "Roadmap" },
+  { href: "/hackathon", label: "Hackathon" },
+  { href: "/build", label: "Build" },
+  { href: "/credits", label: "Credits" },
+];
+const REPO = names.repo_core;
+const path = Astro.url.pathname;
+const isActive = (href: string) => (href === "/" ? path === "/" : path.startsWith(href));
+---
+
+<nav class="nav" aria-label="Primary">
+  <div class="wrap nav-inner">
+    <a class="nav-mark" href="/" aria-label={`${names.project} — home`}>
+      <span class="nav-mark-glyph" aria-hidden="true"></span>
+      <span class="nav-mark-word">{names.project}</span>
+    </a>
+
+    <div class="nav-links" role="list">
+      {nav.map((item) => (
+        <a role="listitem" href={item.href} class:list={["nav-link", { "is-active": isActive(item.href) }]} aria-current={isActive(item.href) ? "page" : undefined}>
+          {item.label}
+        </a>
+      ))}
+    </div>
+
+    <div class="nav-actions">
+      <a class="nav-github" href={REPO} target="_blank" rel="noreferrer" aria-label="View the code on GitHub">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 .25A7.75 7.75 0 0 0 0 8a7.75 7.75 0 0 0 5.31 7.36c.39.07.53-.17.53-.37v-1.35c-2.16.47-2.62-.98-2.62-.98-.35-.89-.86-1.13-.86-1.13-.7-.48.05-.47.05-.47.78.05 1.19.8 1.19.8.69 1.18 1.81.84 2.25.64.07-.5.27-.84.49-1.03-1.73-.2-3.54-.86-3.54-3.84 0-.85.3-1.54.8-2.08-.08-.2-.35-.98.08-2.05 0 0 .65-.21 2.13.79.62-.17 1.28-.26 1.94-.26.66 0 1.32.09 1.94.26 1.48-1 2.13-.79 2.13-.79.43 1.07.16 1.85.08 2.05.5.54.8 1.23.8 2.08 0 2.99-1.82 3.64-3.55 3.83.28.24.53.71.53 1.43v2.12c0 .2.14.44.53.37A7.75 7.75 0 0 0 16 8 7.75 7.75 0 0 0 8 .25Z"/></svg>
+        <span class="nav-github-label">GitHub</span>
+      </a>
+      <a class="btn btn-primary nav-cta" href={REPO} target="_blank" rel="noreferrer">View the code</a>
+    </div>
+
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="nav-drawer" aria-label="Open menu">
+      <span aria-hidden="true">≡</span>
+    </button>
+  </div>
+
+  <div id="nav-drawer" class="nav-drawer" hidden>
+    <div class="wrap nav-drawer-inner">
+      {nav.map((item) => (
+        <a href={item.href} class:list={["nav-drawer-link", { "is-active": isActive(item.href) }]}>
+          {item.label}
+        </a>
+      ))}
+      <a class="btn btn-primary" href={REPO} target="_blank" rel="noreferrer">View the code on GitHub</a>
+    </div>
+  </div>
+</nav>
+
+<script is:inline>
+  const btn = document.querySelector(".nav-toggle");
+  const drawer = document.getElementById("nav-drawer");
+  if (btn && drawer) {
+    btn.addEventListener("click", () => {
+      const open = drawer.hidden === false;
+      drawer.hidden = open;
+      btn.setAttribute("aria-expanded", String(!open));
+      btn.setAttribute("aria-label", open ? "Open menu" : "Close menu");
+    });
+  }
+</script>
+
+<style>
+  .nav{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--bg) 92%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--border)}
+  .nav-inner{display:flex;align-items:center;gap:20px;height:var(--nav-h)}
+  .nav-mark{display:inline-flex;align-items:center;gap:10px;font-weight:700;letter-spacing:-.03em}
+  .nav-mark-glyph{width:18px;height:18px;border-radius:4px;background:var(--ink);box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--ink) 12%,transparent);position:relative}
+  .nav-mark-glyph::after{content:"";position:absolute;inset:4px 3px;border-radius:1px;background:var(--bg);opacity:.9}
+  .nav-mark-glyph::before{content:"";position:absolute;left:6px;right:6px;top:50%;height:2px;background:var(--accent);transform:translateY(-50%);border-radius:1px;z-index:1}
+  .nav-mark-word{font-size:.95rem}
+  .nav-links{display:none;gap:4px;margin-left:8px}@media(min-width:860px){.nav-links{display:flex}}
+  .nav-link{font-size:.84rem;font-weight:500;color:var(--ink-soft);padding:6px 10px;border-radius:999px}
+  .nav-link:hover{color:var(--ink);background:var(--bg-soft)}
+  .nav-link.is-active{color:var(--ink);background:var(--surface);border:1px solid var(--border)}
+  .nav-actions{margin-left:auto;display:none;align-items:center;gap:10px}@media(min-width:860px){.nav-actions{display:flex}}
+  .nav-github{display:inline-flex;align-items:center;gap:6px;font-size:.84rem;font-weight:500;color:var(--ink-soft)}.nav-github:hover{color:var(--ink)}
+  .nav-github-label{display:none}@media(min-width:1020px){.nav-github-label{display:inline}}
+  .nav-cta{padding:7px 13px;font-size:.82rem}
+  .nav-toggle{margin-left:auto;display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:8px;border:1px solid var(--border);background:var(--surface);color:var(--ink);font-size:1.1rem}@media(min-width:860px){.nav-toggle{display:none}}
+  .nav-drawer{border-top:1px solid var(--border);background:var(--bg);padding:12px 0 16px}
+  .nav-drawer-inner{display:flex;flex-direction:column;gap:6px}
+  .nav-drawer-link{padding:10px 12px;border-radius:10px;font-weight:500;color:var(--ink-soft);border:1px solid transparent}
+  .nav-drawer-link:hover{background:var(--bg-soft);color:var(--ink)}.nav-drawer-link.is-active{background:var(--surface);border-color:var(--border);color:var(--ink)}
+</style>

@@ -1,0 +1,58 @@
+[
+  {
+    "key": "qp_replay",
+    "value": "0",
+    "value_label": "0",
+    "caption": "mismatches in ~230,000 replayed circuit positions \u2014 Qwenputer",
+    "source_url": "https://github.com/divagr18/qwenputer#benchmarks",
+    "measured_on": "2026-10-15"
+  },
+  {
+    "key": "qp_speed",
+    "value": "3,700",
+    "value_label": "3,700",
+    "caption": "instructions/s on one L4 \u2014 the compiled CPU (Triton executor, batch 1)",
+    "source_url": "https://github.com/divagr18/qwenputer/blob/main/experimental/riscv/docs/rv32.md",
+    "measured_on": "2026-10-20"
+  },
+  {
+    "key": "eth_gate1",
+    "value": "4,000",
+    "value_label": "4,000",
+    "caption": "keccak + uint256 cases, 0 mismatches \u2014 Ethereus gate 1",
+    "source_url": "https://github.com/fraserbrownirl/ethereus/blob/main/experimental/riscv/docs/eth-bench.md",
+    "measured_on": "2026-10-31"
+  },
+  {
+    "key": "qp_kl",
+    "value": "~6e-4",
+    "value_label": "~6e-4",
+    "caption": "KL vs base Qwen on plain text (noise floor 5e-4) \u2014 Qwenputer",
+    "source_url": "https://github.com/divagr18/qwenputer/blob/main/experimental/riscv/docs/rv32.md",
+    "measured_on": "2026-10-18"
+  },
+  {
+    "key": "eth_keccak_perm",
+    "value": "19,769",
+    "value_label": "19,769",
+    "caption": "instructions per keccak-f[1600] permutation on the compiled CPU",
+    "source_url": "https://github.com/fraserbrownirl/ethereus/blob/main/experimental/riscv/docs/eth-bench.md",
+    "measured_on": "2026-10-31"
+  },
+  {
+    "key": "policy_gate",
+    "value": null,
+    "value_label": null,
+    "caption": "forged approvals in the injection suite \u2014 Ethereus policy gate",
+    "source_url": null,
+    "measured_on": null
+  },
+  {
+    "key": "knowledge_bench",
+    "value": null,
+    "value_label": null,
+    "caption": "Ethereum knowledge benchmark, base vs Ethereus",
+    "source_url": null,
+    "measured_on": null
+  }
+]

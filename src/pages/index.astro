@@ -1,0 +1,185 @@
+---
+import Base from "../layouts/Base.astro";
+import FigureB from "../components/FigureB.astro";
+import EvidenceStrip from "../components/EvidenceStrip.astro";
+import HeroTrace from "../components/HeroTrace.astro";
+import FigureD from "../components/FigureD.astro";
+import DataPolicy from "../components/DataPolicy.astro";
+
+import names from "../data/names.json";
+const REPO = names.repo_core;
+const META = "Ethereus is an EVM agent whose spending rules, hashes and arithmetic run inside the model's own layers, where a prompt can't switch them off. Open weights, exact, replayable.";
+---
+
+<Base title="Ethereum in the weights." description={META}>
+  <style>
+    .hero { display: grid; gap: 20px; padding: 48px 0 28px; }
+    @media (min-width: 900px) { .hero { grid-template-columns: 7fr 5fr; align-items: start; padding: 56px 0 36px; gap: 28px; } }
+    .hero-tertiary { margin-top: 12px; font-size: 0.84rem; color: var(--ink-soft); }
+    .hero-tertiary a { text-decoration: underline; text-underline-offset: 3px; text-decoration-color: var(--border); }
+    @media (min-width: 900px) { .hero { padding: 64px 0 36px; } }
+    .hero h1 {
+      margin: 0; font-size: clamp(2.4rem, 7vw, 4.2rem);
+      line-height: 0.92; letter-spacing: -0.055em; font-weight: 700;
+    }
+    .hero-sub {
+      margin: 16px 0 0; max-width: 54ch;
+      font-size: 1.02rem; line-height: 1.55; color: var(--ink-soft);
+    }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 20px; }
+    .hero-note {
+      margin: 14px 0 0; font-size: 0.78rem; color: var(--ink-faint);
+      border-left: 2px solid var(--border); padding-left: 10px; max-width: 68ch;
+    }
+    .claims { display: grid; gap: 16px; grid-template-columns: 1fr; }
+    @media (min-width: 900px) { .claims { grid-template-columns: repeat(3, 1fr); } }
+    .claim {
+      border: 1px solid var(--border); border-radius: var(--radius-lg);
+      background: var(--surface); padding: 18px 16px 16px;
+      display: flex; flex-direction: column; gap: 10px;
+    }
+    .claim h3 { margin: 0; font-size: 0.96rem; letter-spacing: -0.02em; }
+    .claim p { margin: 0; font-size: 0.86rem; line-height: 1.6; color: var(--ink-soft); }
+    .claim .proof {
+      margin-top: auto; padding-top: 12px; border-top: 1px solid var(--border);
+      font-size: 0.74rem; font-weight: 600; color: var(--ink);
+    }
+    .claim .proof em { font-style: normal; color: var(--ink-faint); font-weight: 500; }
+    .claim .proof .mono { font-weight: 700; }
+    .how-short { display: grid; gap: 18px; }
+    @media (min-width: 900px) { .how-short { grid-template-columns: 1.15fr 1fr; align-items: start; } }
+    .how-short p { margin: 0; font-size: 0.92rem; color: var(--ink-soft); line-height: 1.62; }
+    .teaser {
+      display: grid; gap: 16px;
+      border: 1px solid var(--border); border-radius: var(--radius-lg);
+      background: var(--surface); padding: 18px;
+    }
+    @media (min-width: 760px) { .teaser { grid-template-columns: 1fr auto; align-items: center; } }
+    .teaser p { margin: 0; font-size: 0.92rem; color: var(--ink-soft); }
+    .northstar {
+      border: 1px solid var(--border); border-radius: var(--radius-lg);
+      background: var(--bg-soft); padding: 14px 16px;
+      display: grid; gap: 8px;
+    }
+    @media (min-width: 820px) { .northstar { grid-template-columns: 1fr auto; align-items: center; } }
+    .northstar p { margin: 0; font-size: 0.86rem; color: var(--ink-soft); line-height: 1.55; }
+    .northstar strong { color: var(--ink); }
+    @media(max-width:760px){article[style*='grid-template-columns:72px']{grid-template-columns:1fr !important}}
+</style>
+
+  <!-- HERO — verbatim -->
+  <section class="wrap hero">
+    <div>
+    <h1 class="display">Ethereum in the weights.</h1>
+    <p class="hero-sub">
+      An EVM agent whose spending rules, hashes and arithmetic run inside the model&apos;s own layers.
+      No tool server to trust, no prompt that can switch them off.
+    </p>
+    <div class="hero-actions">
+      <a class="btn btn-primary" href={REPO} target="_blank" rel="noreferrer">View the code →</a>
+      <a class="btn btn-secondary" href="/how-it-works">How it works</a>
+    </div>
+    <p class="hero-tertiary"><a href="/hackathon">Hackathon: dates [TBA] →</a></p>
+    <p class="hero-note">
+      Built on Qwenputer: a RISC-V CPU compiled into Qwen3.5-4B. Nobody trained these layers; a compiler computed every weight.
+    </p>
+    </div>
+    <div style="margin-top:18px"><HeroTrace /></div>
+  </section>
+
+  <!-- NORTH STAR — complements spec, not replaces it -->
+  <section class="wrap" style="padding-bottom:18px">
+    <div class="northstar">
+      <p>
+        <strong>North Star:</strong> frontier-grade smart-contract ability — at small-model cost, with checkable guarantees.
+        Opus&nbsp;5.5 sets the bar today and is expensive to run. Ethereus aims to match it on benchmarks without the API bill or the hallucinated hashes.
+      </p>
+      <a class="btn btn-secondary" href="/roadmap" style="white-space:nowrap">See the roadmap →</a>
+    </div>
+  </section>
+
+  <!-- THE THREE THINGS — headings final, bodies from spec -->
+  <section class="wrap section-pad section-rule">
+    <div style="display:grid;gap:14px">
+      <article style="display:grid;gap:12px;padding:18px;border:1px solid var(--border);border-radius:var(--radius-lg);background:var(--surface);grid-template-columns:72px 1fr 300px;align-items:start">
+        <div class="display" style="font-size:2rem;font-weight:700;color:var(--accent);line-height:1">01</div>
+        <div><h3 style="margin:0;font-size:.96rem">A guardrail a prompt can&apos;t reach.</h3><p style="margin:6px 0 0;font-size:.86rem;color:var(--ink-soft);line-height:1.6">Every agent wallet today enforces its spending policy outside the model: a prompt, a middleware, a server. All of them can be talked around. Ethereus checks the transaction on positions in the token stream that the language model&apos;s layers physically cannot write. “The monitor is off” is just text; the circuit doesn&apos;t read it. The policy is public, fixed in the weights, and every approval is a replayable trace.</p><p style="margin-top:10px;padding-top:10px;border-top:1px solid var(--border);font-size:.74rem;font-weight:600">Policy gate: not yet measured.</p></div>
+        <div style="border:1px solid var(--border);border-radius:8px;background:var(--bg-soft);padding:10px 12px;font-family:JetBrains Mono,monospace;font-size:.72rem;color:var(--ink-soft);line-height:1.6"><span style="color:var(--ink-faint)">policy.yaml</span><br/>allow: [0xa9059cbb]<br/>caps: per_tx 0.5 ETH<br/>forbid: [selfdestruct]</div>
+      </article>
+      <article style="display:grid;gap:12px;padding:18px;border:1px solid var(--border);border-radius:var(--radius-lg);background:var(--surface);grid-template-columns:72px 1fr 300px;align-items:start">
+        <div class="display" style="font-size:2rem;font-weight:700;color:var(--accent);line-height:1">02</div>
+        <div><h3 style="margin:0;font-size:.96rem">Exact, and provable.</h3><p style="margin:6px 0 0;font-size:.86rem;color:var(--ink-soft);line-height:1.6">Agents hallucinate selectors, decimals and wei math. A Python tool fixes that, but then the agent trusts whatever the server sends back. Here keccak, ABI encoding and uint256 arithmetic run inside the forward pass and the trace is the proof. The original Qwenputer replayed ~230,000 circuit positions through a reference machine with zero mismatches.</p><p style="margin-top:10px;padding-top:10px;border-top:1px solid var(--border);font-size:.74rem;font-weight:600">4,000 random cases, 0 mismatches, reference machine vs Python — measured 2026-10-31. <a href="https://github.com/fraserbrownirl/ethereus/blob/main/experimental/riscv/docs/eth-bench.md" target="_blank" rel="noreferrer" style="text-decoration:underline;text-underline-offset:2px;text-decoration-color:var(--border)">eth-bench.md</a></p></div>
+        <div style="border:1px solid var(--border);border-radius:8px;background:var(--bg-soft);padding:10px 12px;font-family:JetBrains Mono,monospace;font-size:.72rem;color:var(--ink-soft);line-height:1.6"><span style="color:var(--accent-ink)">4,000 cases · 0 mismatches</span><br/>keccak + uint256 · gate 1<br/><span style="color:var(--ink-faint)">2026-10-31</span> · <a href="https://github.com/fraserbrownirl/ethereus/blob/main/experimental/riscv/docs/eth-bench.md" style="text-decoration:underline">eth-bench.md</a></div>
+      </article>
+      <article style="display:grid;gap:12px;padding:18px;border:1px solid var(--border);border-radius:var(--radius-lg);background:var(--surface);grid-template-columns:72px 1fr 300px;align-items:start">
+        <div class="display" style="font-size:2rem;font-weight:700;color:var(--accent);line-height:1">03</div>
+        <div><h3 style="margin:0;font-size:.96rem">Knowledge that costs no context.</h3><p style="margin:6px 0 0;font-size:.86rem;color:var(--ink-soft);line-height:1.6">Models get Ethereum wrong: gas prices, EIP status, L2 costs. The ethskills knowledge base fixes that at ~50k tokens of context per conversation. Ethereus holds it in the model&apos;s own recurrent state: zero context cost, and a version a prompt injection can&apos;t swap.</p><p style="margin-top:10px;padding-top:10px;border-top:1px solid var(--border);font-size:.74rem;font-weight:600">Ethereum knowledge benchmark: not yet measured.</p></div>
+        <div style="border:1px solid var(--border);border-radius:8px;background:var(--bg-soft);padding:10px 12px;font-family:JetBrains Mono,monospace;font-size:.72rem;color:var(--ink-soft);line-height:1.6"><span class="mono">files get ethskills/gas.md</span><br/>Base: 15 gwei (ethskills)<br/>EIP-4844: live on mainnet<br/><span style="color:var(--ink-faint)">zero context cost</span></div>
+      </article>
+    </div>
+  </section>
+
+  <!-- THE LOOP — §4.1 -->
+  <section class="wrap section-pad section-rule">
+    <h2 class="display" style="margin:0 0 8px;font-size:1.5rem">The loop.</h2>
+    <p style="margin:0;max-width:68ch;color:var(--ink-soft)">Every tool call Ethereus answers is exact and comes with a replayable trace. That makes each one a labelled training example — the prompt, the call, the verified answer — with no human annotation and no hallucinated labels. The hackathon runs on the hosted Ethereus API. With participants' consent, their agents' traces train the next model's tool use: when to call, how to format the call, how to trust an exact answer instead of re-checking it. The compiled layers are never trained; only the language model around them learns. The next round runs on the better model.</p>
+    <p style="margin-top:10px"><a href="/hackathon#data-policy" style="text-decoration:underline;text-underline-offset:2px;text-decoration-color:var(--border)">How capture and consent work →</a></p>
+    <div style="margin-top:14px"><DataPolicy summaryOnly /></div>
+    <div style="margin-top:18px"><FigureD /></div>
+  </section>
+
+  <!-- HOW IT WORKS (short) + Figure B -->
+  <section class="wrap section-pad section-rule">
+    <div style="display:flex;align-items:baseline;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:14px">
+      <h2 style="margin:0;font-size:1.25rem;letter-spacing:-0.03em">How it works</h2>
+      <a href="/how-it-works" style="font-size:0.84rem;font-weight:600;text-decoration:underline;text-underline-offset:3px;text-decoration-color:var(--border)">Full explainer →</a>
+    </div>
+    <div class="how-short">
+      <div class="prose" style="max-width:none">
+        <p>
+          Qwen3.5 mixes attention layers with Gated DeltaNet layers, and each DeltaNet head keeps a 128&nbsp;×&nbsp;128 state matrix
+          it updates every token. With a one-hot key and the gate held open, an update overwrites exactly one row. That&apos;s a RAM write.
+          A one-hot query reads it back. That&apos;s a RAM read. Qwenputer builds a 32-bit RISC-V CPU out of eleven such layers,
+          with its registers, memory and program counter living in that state. Ethereus writes firmware for that CPU: keccak, ABI,
+          uint256, a small EVM, a signing-policy check. When the model calls a tool, the circuit runs the firmware and writes the
+          answer itself, token by token.
+        </p>
+      </div>
+      <div class="fig-wrap" style="padding:10px">
+        <FigureB compact />
+      </div>
+    </div>
+  </section>
+
+  <!-- EVIDENCE STRIP — every number resolves to evidence.json; brackets never ship -->
+  <section class="wrap section-pad section-rule">
+    <div style="display:flex;align-items:baseline;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:14px">
+      <h2 style="margin:0;font-size:1.05rem;letter-spacing:-0.02em">Evidence</h2>
+      <p style="margin:0;font-size:0.78rem;color:var(--ink-faint)">Every number links to a source. <span class="mono">measured_on</span> lives in <span class="mono">evidence.json</span>.</p>
+    </div>
+    <EvidenceStrip />
+  </section>
+
+  <!-- ROADMAP TEASER — verbatim -->
+  <section class="wrap section-pad section-rule">
+    <div class="teaser">
+      <p>
+        Runs today on Qwen3.5-4B. The firmware never changes; the backbone does. Kimi K3 uses the same gated delta mechanism,
+        which is the path to a frontier-class model with the same guarantees.
+      </p>
+      <a class="btn btn-secondary" href="/roadmap">Roadmap →</a>
+    </div>
+  </section>
+
+  <!-- CREDITS BLOCK (home) — verbatim -->
+  <section class="wrap section-pad section-rule">
+    <p style="margin:0;font-size:0.88rem;color:var(--ink-soft);line-height:1.6">
+      Ethereus stands on Qwenputer by Divyansh Agrawal, nesformer by Drew Breunig, and ethskills by Austin Griffith.
+      We did not write the hard part. Divyansh did. Code MIT, weights Apache-2.0. <a href="/credits" style="text-decoration:underline;text-underline-offset:3px;text-decoration-color:var(--border)">Credits →</a>
+    </p>
+    <div style="margin-top:16px;display:flex;flex-wrap:wrap;gap:10px">
+      <a class="btn btn-primary" href={REPO} target="_blank" rel="noreferrer">View the code</a>
+      <a class="btn btn-secondary" href="/build">Run the demo</a>
+    </div>
+  </section>
+</Base>

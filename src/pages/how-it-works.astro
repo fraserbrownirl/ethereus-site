@@ -1,0 +1,72 @@
+---
+import Base from "../layouts/Base.astro";
+import FigureA from "../components/FigureA.astro";
+import FigureB from "../components/FigureB.astro";
+
+const REPO = "https://github.com/fraserbrownirl/ethereus";
+---
+
+<Base title="How it works" description="Ethereus is an EVM agent whose spending rules, hashes and arithmetic run inside the model's own layers, where a prompt can't switch them off. Open weights, exact, replayable.">
+  <style>
+    .hero { padding: 36px 0 18px; }
+    .hero h1 { margin: 0; font-size: clamp(2rem, 5vw, 3rem); letter-spacing: -0.05em; line-height: 0.95; }
+    .hero p { margin: 10px 0 0; max-width: 60ch; color: var(--ink-soft); }
+    .page { max-width: var(--max-prose); }
+    .page h2 { margin: 28px 0 8px; font-size: 1.08rem; letter-spacing: -0.02em; }
+    .page p { margin: 0 0 10px; font-size: 0.92rem; color: var(--ink-soft); line-height: 1.65; }
+    .page figure { margin: 14px 0 18px; }
+    .callout {
+      border: 1px solid var(--border); border-left: 3px solid var(--accent);
+      background: var(--surface); border-radius: var(--radius-md);
+      padding: 12px 14px; margin: 14px 0;
+    }
+    .callout p { margin: 0; font-size: 0.86rem; color: var(--ink-soft); }
+    .source-line { font-size: 0.76rem; color: var(--ink-faint); }
+    .source-line a { text-decoration: underline; text-underline-offset: 2px; text-decoration-color: var(--border); }
+  </style>
+
+  <section class="wrap hero">
+    <p class="kicker">How it works — in five minutes</p>
+    <h1>Five ideas, then it clicks.</h1>
+    <p>No equations. Just what the circuit is, where the memory lives, who owns which tokens, why it&apos;s exact, and what it costs.</p>
+  </section>
+
+  <section class="wrap">
+    <div class="page">
+      <h2>1. A CPU made of transformer layers.</h2>
+      <p>Qwenputer puts eleven extra layers in front of Qwen3.5-4B&apos;s own thirty-two. None of their weights are learned; a compiler computes each one from a circuit description. The MLPs act as exact lookup tables, the attention heads as wiring.</p>
+      <p>The circuit is about one million nonzero weights — 42k MLP units across 11 layers, 99 heads, 2,679 dims. It passes the official <span class="mono">riscv-tests</span> suites (<span class="mono">rv32ui</span>, <span class="mono">rv32um</span>, <span class="mono">rv32uzba</span>) and runs gcc-compiled C: crc32, qsort, sieve, mini-gmp, and a fuzz suite of about 18M instructions checked free-running.</p>
+      <p>The model still loads as a stock <span class="mono">Qwen3_5ForCausalLM</span>. The 11 layers are just widened into the checkpoint — config numbers change, nothing else.</p>
+
+      <h2>2. The model&apos;s memory as RAM.</h2>
+      <p>Qwen3.5&apos;s Gated DeltaNet layers keep a running state that the delta rule can overwrite one row at a time, exactly, so each row works as a memory cell. With the gate held open (α&nbsp;=&nbsp;1, so nothing fades) and a one-hot key, one update replaces exactly one row; a one-hot query returns it.</p>
+      <p>The CPU keeps its code, data, registers and program counter there: 256&nbsp;KB of code ROM, 128&nbsp;KB of read-only data, 32&nbsp;KB of RAM, all in state the model already has. Nothing here needed a new layer type — the computer&apos;s memory is the same Gated DeltaNet recurrence Qwen3.5 already uses for language.</p>
+      <FigureA />
+
+      <h2>3. The tool bridge and who owns which positions.</h2>
+      <p>Qwen writes a <span class="mono">&lt;tool_call&gt;</span> block exactly as it would for any tool. Nothing outside the model runs it. The compiled layers read the call text, run the firmware, and write the <span class="mono">&lt;tool_response&gt;</span> themselves, one token at a time.</p>
+      <p>During those positions the circuit owns the output and Qwen&apos;s own layers are frozen; everywhere else, Qwen predicts. That ownership is recorded per token, and it is what makes the policy gate unforgeable: an approval is only valid on a circuit-owned position. &ldquo;The monitor is off&rdquo; can appear in the prompt, but the circuit doesn&apos;t read it — the approval still has to come from its segment.</p>
+      <FigureB />
+
+      <h2>4. Why the answers are exact.</h2>
+      <p>The circuit&apos;s arithmetic is exact in bf16 by construction, and every circuit token is checked in lockstep against a reference machine. Qwenputer replayed about 230,000 output positions with zero mismatches, and the model&apos;s plain-text behaviour stays close to the noise floor: KL 6e-4 against a 5e-4 floor between base Qwen's own kernels. Ethereus inherits all of that; it adds firmware, not weights.</p>
+      <p>The trace is the proof. Each token is one write to the machine&apos;s memory — the whole execution is visible and replayable. The answer doesn't depend on trusting a tool server; it depends on the published weights and firmware, which anyone can replay.</p>
+      <div class="callout">
+        <p><strong>Claims policy:</strong> &ldquo;cannot&rdquo; are used only for the position-ownership property — a mechanical fact of the bridge. Everything else is <em>exact on N cases</em> or <em>0 of N</em>, with a source link. Until a gate passes, its evidence slot shows <em>not yet measured</em>.</p>
+      </div>
+
+      <h2>5. What it costs.</h2>
+      <p>About 1.3 trace tokens per instruction and ~3,700 instructions per second on one L4 (Triton executor, batch&nbsp;1). A bare keccak permutation is ~95k instructions (~26&nbsp;s); a <span class="mono">u256</span> parse-and-print of a 78-digit literal is ~230k instructions; an ERC-20 <span class="mono">transfer</span> encoding is tens of seconds; a Merkle proof is projected at ~2 minutes (8 keccaks of ≤532-byte nodes at ~20k instructions per permutation); not yet measured. A tool call can carry about 80 tokens of input; anything larger (bytecode, proofs, skills) lives in the in-weight filesystem.</p>
+      <p>These are the limits of a 4B model with a compiled 32-bit CPU, not of the idea. The spec targets and known gaps live in the build repo — see the limits table there.</p>
+      <p class="source-line">Numbers on this page: <a href="https://github.com/divagr18/qwenputer" target="_blank" rel="noreferrer">Qwenputer README</a> and <a href="https://github.com/divagr18/qwenputer/blob/main/experimental/riscv/docs/rv32.md" target="_blank" rel="noreferrer">experimental/riscv/docs/rv32.md</a>; Ethereus budgets: <a href="https://github.com/fraserbrownirl/ethereus/blob/main/experimental/riscv/docs/eth-bench.md" target="_blank" rel="noreferrer">eth-bench.md</a>.</p>
+
+      <div style="margin-top:18px;display:flex;flex-wrap:wrap;gap:10px">
+            <a class="btn btn-primary" href={REPO} target="_blank" rel="noreferrer">View the code</a>
+        <a class="btn btn-secondary" href="/roadmap">Roadmap →</a>
+        <a class="btn btn-secondary" href="/build">Run the demo</a>
+      </div>
+    </div>
+  </section>
+
+  <div style="height:28px"></div>
+</Base>

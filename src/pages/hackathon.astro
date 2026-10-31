@@ -1,0 +1,69 @@
+---
+import Base from "../layouts/Base.astro";
+import FigureD from "../components/FigureD.astro";
+import DataPolicy from "../components/DataPolicy.astro";
+import names from "../data/names.json";
+import hack from "../data/hackathon.json";
+const META="Ethereus is an EVM agent whose spending rules, hashes and arithmetic run inside the model's own layers, where a prompt can't switch them off. Open weights, exact, replayable.";
+---
+<Base title="Hackathon" description={META}>
+<style>
+  .hero{padding:36px 0 18px}.hero h1{margin:0;font-size:clamp(2rem,5.2vw,3.2rem);letter-spacing:-.05em;line-height:.95}.hero h1.display{font-size:clamp(2.2rem,5.5vw,3.6rem)}.hero p{margin:10px 0 0;max-width:62ch;color:var(--ink-soft)}
+  .sec{max-width:var(--max-prose)}.sec h2{margin:28px 0 8px;font-size:1.05rem;letter-spacing:-.02em}.sec p,.sec li{font-size:.9rem;color:var(--ink-soft);line-height:1.62}.sec ul,.sec ol{margin:8px 0 0;padding-left:18px}
+  .cards{display:grid;gap:12px;margin-top:12px}.cards .c{border:1px solid var(--border);border-radius:var(--radius-lg);background:var(--surface);padding:14px}.cards .c h3{margin:0 0 6px;font-size:.94rem}
+  details{border:1px solid var(--border);border-radius:var(--radius-md);background:var(--surface);padding:10px 14px;margin:8px 0}summary{font-weight:600;cursor:pointer;font-size:.9rem}
+</style>
+<section class="wrap hero">
+  <h1 class="display">Build agents on an EVM model that can't be talked out of its rules.</h1>
+  <p><em>A hackathon on the {names.api}: a hosted {names.project} model with subsidised inference. Ship an agent on an L2. Your agent's traces, with your consent, train the next model.</em></p>
+  <div style="margin-top:14px;display:flex;flex-wrap:wrap;gap:10px">
+    <a class="btn btn-primary" href="#rules">Read the rules</a>
+    <a class="btn btn-secondary" href="#data-policy">Data policy</a>
+  </div>
+  <p style="margin-top:10px;font-size:.82rem;color:var(--ink-faint)">Dates and prize: [TBA — announced here first].</p>
+</section>
+<section class="wrap"><div class="sec">
+  <h2>What you get.</h2>
+  <div class="cards">
+    <div class="c"><h3>A subsidised API key.</h3><p>Access to the {names.api} endpoint running the {names.project} model ({names.backbone} backbone at launch). OpenAI-compatible chat endpoint; the <span class="mono">eth</span>, <span class="mono">files</span>, <span class="mono">sign</span> and <span class="mono">verify</span> tools are exposed as ordinary tool calls. Rate limits and credit amount: [TBA].</p></div>
+    <div class="c"><h3>Exact tools, not a tool server.</h3><p>Keccak, ABI, uint256 and EVM execution answered by the model's compiled layers. Every response carries a replayable trace you can download.</p></div>
+    <div class="c"><h3>A policy gate you can configure.</h3><p>Write a <span class="mono">policy.yaml</span> for your agent's wallet (allowlists, caps, forbidden selectors, per chain). The gate runs in the weights; your harness only signs circuit-approved transactions. <em>Available when Phase 3 ships; until then the API returns <span class="mono">policy gate: not yet available</span> for <span class="mono">sign</span> calls.</em></p></div>
+  </div>
+  <h2>What you build.</h2>
+  <p>An agent that does something real on an EVM chain — Base, Arbitrum, OP, Polygon, or any L2 you can reach. Trading, treasury, payments, on-chain games, DAO ops, anything where an agent holds a key and makes decisions. Judged on what the agent does, how it uses the exact tools, and whether its policy would have stopped it doing something stupid.</p>
+  <p>Suggested tracks:</p>
+  <ul>
+    <li>Agent wallets with a public, attested policy</li>
+    <li>Verifiable on-chain data agents (using <span class="mono">verify</span>)</li>
+    <li>Agents that reason with the in-weights Ethereum knowledge</li>
+    <li>Tooling: trace viewers, policy linters, replay checkers</li>
+  </ul>
+  <DataPolicy />
+  <h2 id="rules">Rules.</h2>
+  <ol>
+    <li>Teams of 1–4. One API key per team.</li>
+    <li>Open source your submission (MIT or Apache-2.0) by the deadline.</li>
+    <li>Submissions run against the {names.api}; local runs of the open weights are welcome but the judged run uses the API trace.</li>
+    <li>Agents must operate on testnets or with keys controlling funds you can afford to lose. The model is research software and not audited.</li>
+    <li>Judging: [TBA — criteria and judges announced with dates].</li>
+    <li>Prize: [TBA]. Paid in stablecoin or ETH.</li>
+    <li>By using a hackathon key you accept the data policy above. You can revoke consent for future capture at any time; captured traces before revocation stay in the dataset.</li>
+  </ol>
+  <h2>Timeline.</h2>
+  <FigureD />
+  <ul>
+    <li>Registration opens: [TBA]</li>
+    <li>Hacking: [TBA]</li>
+    <li>Submissions close: [TBA]</li>
+    <li>Judging and results: [TBA]</li>
+    <li>Traces (consented) go into the first fine-tune: after results</li>
+  </ul>
+  <h2>FAQ.</h2>
+  <details><summary>Do I need a GPU?</summary><p>No. The API hosts the model. The open weights run on one L4 if you want to run locally.</p></details>
+  <details><summary>Is this a token launch / airdrop?</summary><p>No. There is no token. Prizes are stablecoin or ETH.</p></details>
+  <details><summary>What happens to my data?</summary><p>See the data policy. Short version: tool calls and traces, opt-in per key, never your keys or anything the <span class="mono">sign</span> tool sees unless you explicitly tag a session as fully consented.</p></details>
+  <details><summary>Which chains?</summary><p>Any EVM chain. The policy gate and <span class="mono">verify</span> are chain-id aware; ZK-rollups with non-standard state trees are not supported by <span class="mono">verify</span>.</p></details>
+  <details><summary>Can I use another model alongside?</summary><p>Yes, but the judged agent's on-chain actions must go through the {names.api}'s tools.</p></details>
+</div></section>
+<div style="height:28px"></div>
+</Base>

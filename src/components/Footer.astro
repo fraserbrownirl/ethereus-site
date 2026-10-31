@@ -1,0 +1,25 @@
+---
+import names from "../data/names.json";
+const REPO = names.repo_core;
+---
+
+<footer class="footer">
+ <div class="wrap footer-inner">
+  <div class="footer-main">
+    <p class="footer-mark">{names.project}</p>
+    <p class="footer-disclaimer">Research software. Not audited. Do not use with keys that control funds you cannot lose.</p>
+    <p style="margin-top:8px;font-size:.78rem;color:var(--ink-faint)">Hackathon traces are captured only with per-key consent and never include keys or signing data. <a href="/hackathon#data-policy" style="text-decoration:underline;text-underline-offset:2px;text-decoration-color:var(--border)">How capture and consent work →</a></p>
+    <p class="footer-licenses">Site content <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a> · Code in this repo <a href="https://opensource.org/license/mit">MIT</a> · Weights <a href="https://www.apache.org/licenses/LICENSE-2.0">Apache-2.0</a> · <a href="/credits">Credits</a> · <a href={REPO} target="_blank" rel="noreferrer">View the code</a></p>
+  </div>
+  <div class="footer-meta"><p class="mono footer-meta-line"><span style="color:var(--ink-faint)">backbone</span> {names.backbone.toLowerCase()} · <span data-updated>2026-10-31</span></p></div>
+ </div>
+</footer>
+<style>
+  .footer{border-top:1px solid var(--border);background:var(--bg-soft);padding:28px 0 32px}
+  .footer-inner{display:flex;flex-wrap:wrap;gap:24px 40px;justify-content:space-between;align-items:flex-start}
+  .footer-mark{font-weight:700;letter-spacing:-.03em;margin:0}
+  .footer-disclaimer,.footer-licenses{margin:6px 0 0;font-size:.8rem;color:var(--ink-soft)}
+  .footer-licenses a{text-decoration:underline;text-underline-offset:2px;text-decoration-color:var(--border)}
+  .footer-licenses a:hover{text-decoration-color:var(--ink-soft)}
+  .footer-meta-line{font-size:.74rem;color:var(--ink-soft);margin:0}
+</style>

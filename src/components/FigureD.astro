@@ -1,0 +1,42 @@
+---
+const id=`fig-d-${Math.random().toString(36).slice(2,7)}`;
+const alt="A four-step loop: hackathon agents produce consented traces, the traces fine-tune the language model's tool use, the improved model runs the next hackathon; the compiled layers never change.";
+---
+<figure role="group" aria-labelledby={`${id}-cap`}>
+  <figcaption id={`${id}-cap`} class="kicker" style="margin-bottom:10px">The loop</figcaption>
+  <div class="fig-stage">
+    <svg viewBox="0 0 860 420" role="img" aria-label={alt} xmlns="http://www.w3.org/2000/svg">
+      <!-- circle positions -->
+      <text x="430" y="180" text-anchor="middle" font-family="Space Grotesk, Inter, sans-serif" font-size="9" font-weight="700" letter-spacing="0.06em" fill="var(--ink-faint)">THE FIRMWARE NEVER CHANGES</text>
+      {[
+        {x:430,y:52,label:"Hackathon",sub:"agents built on the Ethereus API",t:"top"},
+        {x:690,y:180,label:"Traces",sub:"exact tool calls, consented, replayable",t:"right"},
+        {x:430,y:310,label:"Fine-tune",sub:"trains the LM's tool use; compiled layers untouched",t:"bottom"},
+        {x:170,y:180,label:"Next model",sub:"better backbone, same firmware",t:"left"},
+      ].map((n,i)=>{
+        const arrowFrom = [{x:520,y:92},{x:690,y:250},{x:340,y:270},{x:170,y:110}][i];
+        const arrowTo = [{x:620,y:130},{x:500,y:270},{x:240,y:210},{x:340,y:90}][i];
+        const words=["build","capture","train","deploy"][i];
+        return (<g>
+          <rect x={n.x-96} y={n.y-24} width="192" height="56" rx="10" fill="var(--surface)" stroke="var(--border)" />
+          <text x={n.x} y={n.y-6} text-anchor="middle" font-family="Space Grotesk, Inter, sans-serif" font-size="10" font-weight="600" fill="var(--ink)">{n.label}</text>
+          <text x={n.x} y={n.y+8} text-anchor="middle" font-family="Inter, sans-serif" font-size="7" fill="var(--ink-soft)">{n.sub}</text>
+        </g>)
+      })}
+      {[
+        {x:560,y:88, w:"build", x2:620,y2:132},
+        {x:640,y:230, w:"capture", x2:580,y2:250},
+        {x:300,y:256, w:"train", x2:240,y2:210},
+        {x:210,y:130, w:"deploy", x2:320,y2:92},
+      ].map(a=>(
+        <g>
+          <path d={`M${a.x} ${a.y} Q${(a.x+a.x2)/2} ${(a.y+a.y2)/2} ${a.x2} ${a.y2}`} fill="none" stroke="var(--accent)" stroke-width="1.4" marker-end="url(#arr-a)"/>
+          <text x={(a.x+a.x2)/2} y={(a.y+a.y2)/2-6} text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="6.2" fill="var(--accent-ink)">{a.w}</text>
+        </g>
+      ))}
+      <defs><marker id="arr-a" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="var(--accent)"/></marker></defs>
+    </svg>
+  </div>
+  <p style="margin:8px 0 0;font-size:.76rem;color:var(--ink-faint)">Hackathon agents produce consented traces → the traces fine-tune the LM's tool use → the improved model runs the next hackathon.</p>
+</figure>
+<style>.fig-stage{border:1px solid var(--border);border-radius:var(--radius-lg);background:var(--surface);padding:14px;overflow-x:auto}.fig-stage svg{display:block;width:100%;min-width:520px}</style>
