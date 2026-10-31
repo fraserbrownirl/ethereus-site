@@ -1,0 +1,60 @@
+---
+import StatusChip from "./StatusChip.astro";
+
+// Figure C — "Same firmware, bigger brain" (timeline under a constant bar)
+const steps = [
+  { id: "qwen-4b", label: "Qwen3.5-4B", sub: "runs today", note: "same compiler, wider merge →", chipPhase: "foundation" as const },
+  { id: "qwen-larger", label: "Qwen3.5 (larger)", sub: "wider backbone", note: "KDA port, MoE placement →", chipPhase: "firmware" as const },
+  { id: "kimi-linear", label: "Kimi Linear 48B-A3B", sub: "KDA · 1–2× 80 GB", note: "where the risk lives", chipPhase: "roadmap_scale" as const },
+  { id: "kimi-k3", label: "Kimi K3 (2.8T, 104B active)", sub: "frontier · sidecar, no re-merge", note: "three KDA per attention", chipPhase: "roadmap_scale" as const },
+];
+// Runtime chips read from /status.json; build-time fallbacks below
+const fallback: Record<string, string> = { foundation: "done", firmware: "in-progress", roadmap_scale: "planned" };
+---
+
+<div class="fig-c">
+  <p class="kicker" style="margin:0 0 10px">Same firmware, bigger brain</p>
+  <div class="fig-c-stage">
+    <svg viewBox="0 0 860 170" role="img" aria-label="Four steps left to right: Qwen3.5-4B, larger Qwen3.5, Kimi Linear, Kimi K3. An unbroken bar below reads eth, files, sign and verify firmware unchanged." xmlns="http://www.w3.org/2000/svg">
+      <!-- track line -->
+      <line x1="38" y1="42" x2="822" y2="42" stroke="var(--border)" stroke-width="1.4" />
+      {steps.map((s, i) => {
+        const cx = 76 + i * 218;
+        return (
+          <g>
+            <circle cx={cx} cy="42" r="11" fill="var(--surface)" stroke="var(--ink)" stroke-width="1.4" />
+            <circle cx={cx} cy="42" r="4.2" fill={i === 0 ? "var(--accent)" : "var(--ink)"} />
+            <text x={cx} y="18" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="6.6" font-weight="600" fill="var(--ink-faint)">STEP {i + 1}</text>
+            <text x={cx} y="74" text-anchor="middle" font-family="Inter, sans-serif" font-size="8.6" font-weight="700" fill="var(--ink)">{s.label}</text>
+            <text x={cx} y="86" text-anchor="middle" font-family="Inter, sans-serif" font-size="7.4" fill="var(--ink-soft)">{s.sub}</text>
+            <text x={cx} y="98" text-anchor="middle" font-family="Inter, sans-serif" font-size="6.8" fill="var(--ink-faint)">{s.note}</text>
+          </g>
+        );
+      })}
+      <!-- constant bar -->
+      <g transform="translate(24,118)">
+        <rect x="0" y="0" width="812" height="28" rx="999" fill="var(--accent-soft)" stroke="var(--accent)" stroke-opacity="0.35" />
+        <text x="406" y="18" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="7.8" font-weight="600" letter-spacing="0.04em" fill="var(--accent-ink)">eth · files · sign · verify — firmware unchanged</text>
+      </g>
+      <text x="430" y="162" text-anchor="middle" font-family="Inter, sans-serif" font-size="7.2" fill="var(--ink-faint)">Choosing Ethputer today does not lock you to a 4B model.</text>
+    </svg>
+  </div>
+
+  <div class="fig-c-chips">
+    {steps.map((s) => (
+      <div class="fig-c-chip-row">
+        <span class="mono" style="font-size:0.72rem;font-weight:700;color:var(--ink-soft)">{s.label}</span>
+        <StatusChip phase={s.chipPhase} status={fallback[s.chipPhase]} label={s.label} />
+      </div>
+    ))}
+    <p class="mono" style="margin:8px 0 0;font-size:0.68rem;color:var(--ink-faint)">Updated <span data-updated>2026-10-31</span> · build agent edits <span class="mono">public/status.json</span> with no redeploy.</p>
+  </div>
+</div>
+
+<style>
+  .fig-c-stage { border: 1px solid var(--border); border-radius: var(--radius-lg); background: var(--surface); padding: 14px; overflow-x: auto; }
+  .fig-c-stage svg { display: block; width: 100%; min-width: 560px; }
+  .fig-c-chips { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-top: 12px; }
+  @media (max-width: 760px) { .fig-c-chips { grid-template-columns: 1fr 1fr; } }
+  .fig-c-chip-row { display: flex; flex-direction: column; gap: 6px; padding: 10px 12px; border: 1px solid var(--border); border-radius: var(--radius-md); background: var(--surface); }
+</style>
