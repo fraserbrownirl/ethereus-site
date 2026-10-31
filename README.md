@@ -1,6 +1,6 @@
-# ethputer-site
+# ethereus-site
 
-Astro site for [Ethputer](https://github.com/fraserbrownirl/ethereus) — an EVM agent whose guardrails and arithmetic live in its weights.
+Astro site for [Ethereus](https://github.com/fraserbrownirl/ethereus) — an EVM agent whose guardrails and arithmetic live in its weights.
 
 - Frontend-only: no Python, no weights. Core research lives in `fraserbrownirl/ethereus`.
 - Stack: Astro 5 · plain CSS · hand-written themed SVGs · `evidence.json` + `status.json`

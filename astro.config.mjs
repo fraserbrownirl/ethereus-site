@@ -3,6 +3,6 @@ import { defineConfig } from "astro/config";
 
 // Static site — no SSR. Change `site` when domain is final.
 export default defineConfig({
-  site: "https://ethputer.xyz",
+  site: "https://ethereus.xyz",
   output: "static",
 });

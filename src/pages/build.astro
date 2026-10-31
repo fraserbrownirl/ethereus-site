@@ -44,7 +44,7 @@ const REPO_URL = REPO;
       <div class="card">
         <p class="kicker" style="margin:0 0 8px">Repo</p>
         <p style="margin:0"><a href={REPO_URL} target="_blank" rel="noreferrer" class="mono" style="text-decoration:underline;text-underline-offset:3px;text-decoration-color:var(--border)">{REPO_URL}</a></p>
-        <p style="margin:8px 0 0">Core research code (Qwenputer + RV32 + Ethputer firmware) lives at <span class="mono">fraserbrownirl/ethereus</span>. This site is <span class="mono">fraserbrownirl/ethputer-site</span> — frontend only, no weights, no Python.</p>
+        <p style="margin:8px 0 0">Core research code (Qwenputer + RV32 + Ethereus firmware) lives at <span class="mono">fraserbrownirl/ethereus</span>. This site is <span class="mono">fraserbrownirl/ethereus-site</span> — frontend only, no weights, no Python.</p>
       </div>
 
       <h2>What runs today</h2>
@@ -86,8 +86,8 @@ uv run python -m chipformer.rv.chat qwenputer-rv --firmware tests/data/rv/eth-br
       <ul>
         <li>Read the website spec at <span class="mono">docs/website-build-spec.md</span> in the core repo — it&apos;s the source of truth for any mechanism claim.</li>
         <li>Numbers come from <span class="mono">experimental/riscv/docs/eth-bench.md</span> and the Qwenputer README — the site agent never invents a number.</li>
-        <li>Site PRs go to <span class="mono">fraserbrownirl/ethputer-site</span> on branch <span class="mono">feat/site-v1</span> → preview deploy → <span class="mono">main</span>.</li>
-        <li>Core PRs go to <span class="mono">fraserbrownirl/ethereus</span> — keep <span class="mono">ethputer-site/</span> out of that repo.</li>
+        <li>Site PRs go to <span class="mono">fraserbrownirl/ethereus-site</span> on branch <span class="mono">feat/site-v1</span> → preview deploy → <span class="mono">main</span>.</li>
+        <li>Core PRs go to <span class="mono">fraserbrownirl/ethereus</span> — keep <span class="mono">ethereus-site/</span> out of that repo.</li>
       </ul>
 
       <div class="callout" style="margin-top:16px">

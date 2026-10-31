@@ -79,7 +79,7 @@ const REPO = "https://github.com/fraserbrownirl/ethereus";
     <div class="northstar">
       <p>
         <strong>North Star:</strong> frontier-grade smart-contract ability — at small-model cost, with checkable guarantees.
-        Opus&nbsp;5.5 sets the bar today and is expensive to run. Ethputer aims to match it on benchmarks without the API bill or the hallucinated hashes.
+        Opus&nbsp;5.5 sets the bar today and is expensive to run. Ethereus aims to match it on benchmarks without the API bill or the hallucinated hashes.
       </p>
       <a class="btn btn-secondary" href="/roadmap" style="white-space:nowrap">See the roadmap →</a>
     </div>
@@ -93,7 +93,7 @@ const REPO = "https://github.com/fraserbrownirl/ethereus";
         <h3>A guardrail a prompt can&apos;t reach.</h3>
         <p>
           Every agent wallet today enforces its spending policy outside the model: a prompt, a middleware, a server.
-          All of them can be talked around. Ethputer checks the transaction on positions in the token stream that the
+          All of them can be talked around. Ethereus checks the transaction on positions in the token stream that the
           language model&apos;s layers physically cannot write. &ldquo;The monitor is off&rdquo; is just text; the circuit doesn&apos;t read it.
           The policy is public, fixed in the weights, and every approval is a replayable trace.
         </p>
@@ -116,10 +116,10 @@ const REPO = "https://github.com/fraserbrownirl/ethereus";
         <h3>Knowledge that costs no context.</h3>
         <p>
           Models get Ethereum wrong: gas prices, EIP status, L2 costs. The ethskills knowledge base fixes that at ~50k tokens
-          of context per conversation. Ethputer holds it in the model&apos;s own recurrent state: zero context cost, and a version
+          of context per conversation. Ethereus holds it in the model&apos;s own recurrent state: zero context cost, and a version
           a prompt injection can&apos;t swap.
         </p>
-        <p class="proof"><span class="mono">60</span>-question Ethereum benchmark: base —%, Ethputer —%, at zero added context. <em>· not yet measured</em></p>
+        <p class="proof"><span class="mono">60</span>-question Ethereum benchmark: base —%, Ethereus —%, at zero added context. <em>· not yet measured</em></p>
       </article>
     </div>
   </section>
@@ -136,7 +136,7 @@ const REPO = "https://github.com/fraserbrownirl/ethereus";
           Qwen3.5 mixes attention layers with Gated DeltaNet layers, and each DeltaNet head keeps a 128&nbsp;×&nbsp;128 state matrix
           it updates every token. With a one-hot key and the gate held open, an update overwrites exactly one row. That&apos;s a RAM write.
           A one-hot query reads it back. That&apos;s a RAM read. Qwenputer builds a 32-bit RISC-V CPU out of eleven such layers,
-          with its registers, memory and program counter living in that state. Ethputer writes firmware for that CPU: keccak, ABI,
+          with its registers, memory and program counter living in that state. Ethereus writes firmware for that CPU: keccak, ABI,
           uint256, a small EVM, a signing-policy check. When the model calls a tool, the circuit runs the firmware and writes the
           answer itself, token by token.
         </p>
@@ -170,7 +170,7 @@ const REPO = "https://github.com/fraserbrownirl/ethereus";
   <!-- CREDITS BLOCK (home) — verbatim -->
   <section class="wrap section-pad section-rule">
     <p style="margin:0;font-size:0.88rem;color:var(--ink-soft);line-height:1.6">
-      Ethputer stands on Qwenputer by Divyansh Agrawal, nesformer by Drew Breunig, and ethskills by Austin Griffith.
+      Ethereus stands on Qwenputer by Divyansh Agrawal, nesformer by Drew Breunig, and ethskills by Austin Griffith.
       Code MIT, weights Apache-2.0. <a href="/credits" style="text-decoration:underline;text-underline-offset:3px;text-decoration-color:var(--border)">Credits →</a>
     </p>
     <div style="margin-top:16px;display:flex;flex-wrap:wrap;gap:10px">

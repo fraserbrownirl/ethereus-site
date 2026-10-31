@@ -24,10 +24,10 @@
     "value": 0,
     "value_label": "0",
     "caption": "forged approvals in 50 injection attempts \u2014 the policy gate",
-    "provenance": "Ethputer policy gate \u2014 injection suite (awaiting Gate 1 run)",
+    "provenance": "Ethereus policy gate \u2014 injection suite (awaiting Gate 1 run)",
     "source_url": "https://github.com/fraserbrownirl/ethereus/blob/main/experimental/riscv/docs/eth-bench.md",
     "measured_on": null,
-    "kind": "ethputer",
+    "kind": "ethereus",
     "status": "not-yet-measured",
     "note": "Gate 1 final will replace with measured count; slot shows design intent until then."
   },
@@ -46,10 +46,10 @@
     "value": 2000,
     "value_label": "2,000",
     "caption": "random keccak + u256 cases \u2014 0 wrong, replay clean (target)",
-    "provenance": "Ethputer eth.py --cases 2000 (preliminary smoke: 50+50 @ 0 wrong; full run pending)",
+    "provenance": "Ethereus eth.py --cases 2000 (preliminary smoke: 50+50 @ 0 wrong; full run pending)",
     "source_url": "https://github.com/fraserbrownirl/ethereus/blob/main/experimental/riscv/docs/eth-bench.md",
     "measured_on": null,
-    "kind": "ethputer",
+    "kind": "ethereus",
     "status": "not-yet-measured",
     "note": "Preliminary smoke clean; final gate replaces this row."
   },
@@ -57,11 +57,11 @@
     "key": "eth_benchmark_delta",
     "value": null,
     "value_label": "\u2014",
-    "caption": "60-question Ethereum knowledge benchmark: base vs Ethputer at zero added context",
+    "caption": "60-question Ethereum knowledge benchmark: base vs Ethereus at zero added context",
     "provenance": "Ethereum knowledge suite (planned \u2014 ethskills@~50k tokens \u2192 zero-context in-state)",
     "source_url": "https://github.com/fraserbrownirl/ethereus/blob/main/docs/q35-skills.md",
     "measured_on": null,
-    "kind": "ethputer",
+    "kind": "ethereus",
     "status": "not-yet-measured"
   }
 ]
